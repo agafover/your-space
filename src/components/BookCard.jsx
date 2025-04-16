@@ -36,7 +36,7 @@ function BookCard({ book, index }) {
               <iframe
                 src={`https://www.instagram.com/p/${book.instagram}/embed`}
                 width="100%"
-                height="400"
+                height="1068"
                 className="mx-auto rounded-xl"
                 allowtransparency="true"
                 allow="encrypted-media"
