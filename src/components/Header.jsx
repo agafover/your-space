@@ -1,4 +1,4 @@
-import { Disclosure } from "@headlessui/react"
+import { Disclosure, Transition } from "@headlessui/react" // для плавного перехода
 import { Menu, X } from "lucide-react"
 import { Link } from "react-router-dom"
 
@@ -38,24 +38,40 @@ function Header() {
 
             {/* Mobile menu button */}
             <div className="md:hidden">
-              <Disclosure.Button className="text-brand-dark">
-                {open ? <X size={24} /> : <Menu size={24} />}
+              <Disclosure.Button className="text-brand-dark transition-transform duration-200 ease-in-out transform">
+                <span className={`transition-opacity duration-200 ${open ? "opacity-0 absolute" : "opacity-100"}`}>
+                  <Menu size={24} />
+                </span>
+                <span className={`transition-opacity duration-200 ${open ? "opacity-100" : "opacity-0 absolute"}`}>
+                  <X size={24} />
+                </span>
               </Disclosure.Button>
+
             </div>
           </div>
 
           {/* Mobile menu panel */}
-          <Disclosure.Panel className="md:hidden px-4 pb-4 space-y-2">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.to}
-                className="block text-brand-dark hover:underline"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </Disclosure.Panel>
+          <Transition
+            enter="transition duration-200 ease-out"
+            enterFrom="transform scale-y-0 opacity-0"
+            enterTo="transform scale-y-100 opacity-100"
+            leave="transition duration-150 ease-in"
+            leaveFrom="transform scale-y-100 opacity-100"
+            leaveTo="transform scale-y-0 opacity-0"
+          >
+            <Disclosure.Panel className="md:hidden px-4 pb-4 space-y-2 origin-top">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.to}
+                  className="block text-brand-dark hover:underline"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </Disclosure.Panel>
+          </Transition>
+
         </>
       )}
     </Disclosure>
