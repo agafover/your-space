@@ -28,7 +28,7 @@ function App() {
             <Link to="/books" className="hover:underline">Книжный клуб</Link>
             <Link to="/culture" className="hover:underline">Культура</Link>
             <Link to="/events" className="hover:underline">Мероприятия</Link>
-            <Link to="/calendar" className="hover:underline">Календарь</Link>
+            <Link to="/calendar" className="hover:underline">Афиша</Link>
             <Link to="/education" className="hover:underline">Образование</Link>
             <Link to="/trips" className="hover:underline">Поездки</Link>
             <Link to="/contacts" className="hover:underline">Контакты</Link>

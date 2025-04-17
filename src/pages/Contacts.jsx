@@ -8,10 +8,12 @@ function Contacts() {
       </p>
 
       <a
-        href="mailto:yourmail@example.com"
-        className="inline-block mt-4 text-pink-600 hover:underline text-lg"
+        href="mailto:community.yourspace@gmail.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 border border-brand-dark text-brand-dark px-4 py-2 rounded-xl hover:bg-brand-dark hover:text-white transition"
       >
-        📧 community.yourspace@gmail.com
+        📧 Связаться с нами
       </a>
     </div>
   )

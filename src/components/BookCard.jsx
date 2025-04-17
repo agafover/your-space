@@ -10,7 +10,7 @@ function BookCard({ book, index }) {
   const toggleInsta = () => setShowInsta(!showInsta)
 
   return (
-    <li className="bg-white p-4 shadow rounded-xl">
+    <li className="bg-white p-7 shadow rounded-xl">
       <h3 className="text-lg font-semibold text-brand-dark">
         {book.title} — <span className="text-gray-700">{book.author}</span>
       </h3>
