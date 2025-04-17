@@ -11,8 +11,8 @@ function BookCard({ book, index }) {
 
   return (
     <li className="bg-white p-7 shadow rounded-xl">
-      <h3 className="text-lg font-semibold text-brand-dark">
-        {book.title} — <span className="text-gray-700">{book.author}</span>
+      <h3 className="text-xl md:text-2xl font-bold text-brand-dark">
+        {book.title} — <span className="text-xl font-medium text-gray-700">{book.author}</span>
       </h3>
       <p className="text-sm text-gray-500 mb-1">📅 {book.month} 2025</p>
 

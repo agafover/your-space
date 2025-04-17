@@ -3,6 +3,20 @@ import BookCard from "../components/BookCard"
 import { BookOpenText } from "lucide-react"
 
 function Books() {
+  const monthOrder = {
+    январь: 1,
+    февраль: 2,
+    март: 3,
+    апрель: 4,
+    май: 5,
+    июнь: 6,
+    июль: 7,
+    август: 8,
+    сентябрь: 9,
+    октябрь: 10,
+    ноябрь: 11,
+    декабрь: 12,
+  }
   const books2025 = [
     {
       title: "Милый друг",
@@ -71,6 +85,9 @@ function Books() {
 
   ]
 
+  const sorted2025 = [...books2025].sort((a, b) => monthOrder[b.month] - monthOrder[a.month])
+  const sorted2024 = [...books2024].sort((a, b) => monthOrder[b.month] - monthOrder[a.month])
+
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold text-brand-dark text-center mb-6">
@@ -78,23 +95,23 @@ function Books() {
       </h1>
 
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-brand-dark">
+        <h2 className="text-xl font-semibold mt-10 mb-4 text-brand-dark flex items-center gap-2">
           <BookOpenText className="w-5 h-5" /> Книги 2025
         </h2>
+
         <ul className="space-y-6">
-          {books2025.map((book, index) => (
+          {sorted2025.map((book, index) => (
             <BookCard key={index} book={book} index={index} />
           ))}
         </ul>
-        <h2 className="text-xl font-semibold mt-10 mb-4 text-brand-dark">
+        <h2 className="text-xl font-semibold mt-10 mb-4 text-brand-dark flex items-center gap-2">
           <BookOpenText className="w-5 h-5" /> Книги 2024
         </h2>
         <ul className="space-y-6">
-          {books2024.map((book, index) => (
-            <BookCard key={`2024-${index}`} book={book} index={`2024-${index}`} />
+          {sorted2024.map((book, index) => (
+            <BookCard key={index} book={book} index={index} />
           ))}
         </ul>
-
       </section>
     </div>
   )
