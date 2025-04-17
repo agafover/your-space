@@ -15,12 +15,16 @@ const navigation = [
 
 function Header() {
   return (
-    <Disclosure as="nav" className="bg-white shadow-md">
+    <Disclosure as="nav" className="bg-white shadow-md sticky top-0 z-50">
       {({ open }) => (
         <>
-          <div className="mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <div className="text-2xl font-bold text-brand-dark">Your Space</div>
-            <div className="hidden md:flex space-x-4">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <Link to="/" className="text-2xl font-bold text-brand-dark whitespace-nowrap">
+              Your Space
+            </Link>
+
+            {/* Desktop navigation */}
+            <div className="hidden md:flex flex-wrap gap-x-4">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -31,6 +35,8 @@ function Header() {
                 </Link>
               ))}
             </div>
+
+            {/* Mobile menu button */}
             <div className="md:hidden">
               <Disclosure.Button className="text-brand-dark">
                 {open ? <X size={24} /> : <Menu size={24} />}
@@ -38,7 +44,7 @@ function Header() {
             </div>
           </div>
 
-          {/* Мобильное меню */}
+          {/* Mobile menu panel */}
           <Disclosure.Panel className="md:hidden px-4 pb-4 space-y-2">
             {navigation.map((item) => (
               <Link

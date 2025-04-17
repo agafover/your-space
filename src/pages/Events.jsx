@@ -29,7 +29,7 @@ function Events() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-brand-dark mb-8 text-center">
-        Культура
+        Мероприятия
       </h1>
 
       {events.map((event, index) => (
