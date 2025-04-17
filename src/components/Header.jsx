@@ -1,6 +1,7 @@
-import { Disclosure, Transition } from "@headlessui/react" // для плавного перехода
-import { Menu, X } from "lucide-react"
+import { Disclosure, Transition } from "@headlessui/react"
+import { Menu, X, Moon, Sun } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 const navigation = [
   { name: "Главная", to: "/" },
@@ -8,71 +9,109 @@ const navigation = [
   { name: "Книжный клуб", to: "/books" },
   { name: "Культура", to: "/culture" },
   { name: "Мероприятия", to: "/events" },
-  { name: "Календарь", to: "/calendar" },
+  { name: "Афиша", to: "/calendar" },
   { name: "Образование", to: "/education" },
   { name: "Поездки", to: "/trips" },
   { name: "Контакты", to: "/contacts" },
 ]
 
 function Header() {
+  const [darkMode, setDarkMode] = useState(false)
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme")
+    if (savedTheme === "dark") {
+      setDarkMode(true)
+      document.documentElement.classList.add("dark")
+    } else if (savedTheme === "light") {
+      setDarkMode(false)
+      document.documentElement.classList.remove("dark")
+    } else {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      setDarkMode(prefersDark)
+      if (prefersDark) {
+        document.documentElement.classList.add("dark")
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark")
+      localStorage.setItem("theme", "dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+      localStorage.setItem("theme", "light")
+    }
+  }, [darkMode])
+
   return (
-    <Disclosure as="nav" className="bg-white shadow-md sticky top-0 z-50">
+    <Disclosure
+      as="nav"
+      className="bg-brand dark:bg-brand-dark text-brand-dark dark:text-brand-light shadow-md sticky top-0 z-50"
+    >
       {({ open }) => (
         <>
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <Link to="/" className="text-2xl font-bold text-brand-dark whitespace-nowrap">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            {/* Название */}
+            <Link to="/" className="text-2xl font-bold text-brand-dark dark:text-brand-light whitespace-nowrap">
               Your Space
             </Link>
 
-            {/* Desktop navigation */}
-            <div className="hidden md:flex flex-wrap gap-x-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.to}
-                  className="text-sm text-brand-dark hover:underline"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
+            {/* Навигация и переключатель темы */}
+            <div className="flex items-center gap-4">
+              {/* Desktop menu */}
+              <div className="hidden md:flex gap-4">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.to}
+                    className="text-sm hover:underline text-brand-dark dark:text-brand-light"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <Disclosure.Button className="text-brand-dark transition-transform duration-200 ease-in-out transform">
-                <span className={`transition-opacity duration-200 ${open ? "opacity-0 absolute" : "opacity-100"}`}>
-                  <Menu size={24} />
-                </span>
-                <span className={`transition-opacity duration-200 ${open ? "opacity-100" : "opacity-0 absolute"}`}>
-                  <X size={24} />
-                </span>
-              </Disclosure.Button>
+              {/* Mobile menu button */}
+              <div className="md:hidden">
+                <Disclosure.Button className="text-brand-dark dark:text-brand-light">
+                  {open ? <X size={24} /> : <Menu size={24} />}
+                </Disclosure.Button>
+              </div>
 
+              {/* Theme toggle */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="text-brand-dark dark:text-brand-light transition"
+                aria-label="Toggle Dark Mode"
+              >
+                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
             </div>
           </div>
 
-          {/* Mobile menu panel */}
+          {/* Mobile menu */}
           <Transition
             enter="transition duration-200 ease-out"
             enterFrom="transform scale-y-0 opacity-0"
             enterTo="transform scale-y-100 opacity-100"
             leave="transition duration-150 ease-in"
             leaveFrom="transform scale-y-100 opacity-100"
-            leaveTo="transform scale-y-0 opacity-0"
+            leaveTo="transform scale-y-0 opacity-0"  
           >
             <Disclosure.Panel className="md:hidden px-4 pb-4 space-y-2 origin-top">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.to}
-                  className="block text-brand-dark hover:underline"
+                  className="block text-brand-dark dark:text-brand-light hover:underline"
                 >
                   {item.name}
                 </Link>
               ))}
             </Disclosure.Panel>
           </Transition>
-
         </>
       )}
     </Disclosure>

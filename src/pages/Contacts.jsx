@@ -1,3 +1,4 @@
+import { Mail } from 'lucide-react'
 function Contacts() {
   return (
     <div className="max-w-xl mx-auto py-10 px-4 text-center">
@@ -13,7 +14,7 @@ function Contacts() {
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 border border-brand-dark text-brand-dark px-4 py-2 rounded-xl hover:bg-brand-dark hover:text-white transition"
       >
-        📧 Связаться с нами
+        <Mail /> Связаться с нами
       </a>
     </div>
   )
