@@ -74,22 +74,25 @@ function Home() {
       </section>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center max-w-7xl mx-auto px-4 pb-16">
-        <div className="p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
+        <Link to="/books" className="block p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
           <BookOpen className="mx-auto text-brand-dark dark:text-brand mb-3" size={32} />
           <h3 className="text-lg font-semibold text-brand-text dark:text-brand-light mb-2">Книжный клуб</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">Обсуждаем вдохновляющие книги в уютной атмосфере.</p>
-        </div>
-        <div className="p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
+        </Link>
+
+        <Link to="/events" className="block p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
           <CalendarDays className="mx-auto text-brand-dark dark:text-brand mb-3" size={32} />
           <h3 className="text-lg font-semibold text-brand-text dark:text-brand-light mb-2">Мероприятия</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">Встречи, лекции и творческие вечера в Праге и онлайн.</p>
-        </div>
-        <div className="p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
+        </Link>
+
+        <Link to="/about" className="block p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
           <Users className="mx-auto text-brand-dark dark:text-brand mb-3" size={32} />
           <h3 className="text-lg font-semibold text-brand-text dark:text-brand-light mb-2">Комьюнити</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">Делимся опытом и поддержкой с женщинами из разных сфер.</p>
-        </div>
+        </Link>
       </section>
+
 
       <section className="max-w-7xl mx-auto px-4 pb-20">
         <h2 className="text-2xl font-bold text-left mb-6 text-brand-text dark:text-brand-light">В этом месяце мы читаем</h2>
