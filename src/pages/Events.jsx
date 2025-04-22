@@ -38,6 +38,24 @@ const events = [
       "/images/opera-6.jpg",
     ],
   },
+  {
+    title: "Рождество в Дрездене",
+    date: "14.12.2024",
+    description:
+      `Поездка в Дрезден на рождественскую ярмарку. Мы погрузились в атмосферу праздника, насладились местной кухней, купили подарки для близких, \
+      а так же купили на пробу Дубайский шоколад от Lindt.`,
+    instagram: "DEDqgALuBib",
+    tags: ["Поездки"],
+    images: [
+      "/images/dresden/photo_2025-04-22_13-50-29.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-23.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-24.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-25.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-27.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-28.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-35.jpg",
+    ],
+  },
 ]
 
 
@@ -88,6 +106,9 @@ function Events() {
           <option value="Культура">Культура</option>
           <option value="Поездки">Поездки</option>
           <option value="Развлечения">Развлечения</option>
+          <option value="Образование">Образование</option>
+          <option value="Спорт">Спорт</option>
+          <option value="Книги">Книги</option>
         </select>
       </div>
 

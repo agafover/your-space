@@ -9,7 +9,10 @@ function EventCard({ event, expanded, onToggle }) {
         "Мастер-класс": "bg-green-100 text-green-800",
         "Культура": "bg-purple-100 text-purple-800",
         "Поездки": "bg-blue-100 text-blue-700",
-        "Развлечения": "bg-yellow-100 text-yellow-700"
+        "Развлечения": "bg-yellow-100 text-yellow-700",
+        "Образование": "bg-orange-100 text-orange-700",
+        "Спорт": "bg-red-100 text-red-700",
+        "Книги": "bg-pink-100 text-pink-700",
     }
 
 
@@ -72,18 +75,19 @@ function EventCard({ event, expanded, onToggle }) {
                             </a>
                         )}
                         {event.images?.length > 1 && (
-                            <div className={`w-full ${expanded ? "lg:w-1/2 max-h-[700px]" : ""} flex-shrink-0`}>
-                            <div className="h-full">
-                              <img
-                                src={event.images?.[0] || "/placeholder.jpg"}
-                                alt={event.title}
-                                className={`w-full object-cover ${expanded ? "h-full rounded-l-xl" : "h-64 rounded-t-xl"}`}
-                                style={{ aspectRatio: expanded ? "4 / 3" : undefined }}
-                              />
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+                                {event.images.slice(1).map((img, i) => (
+                                    <img
+                                        key={i}
+                                        src={img}
+                                        alt={event.title}
+                                        onClick={() => setLightboxIndex(i + 1)}
+                                        className="rounded-md object-cover w-full h-32 cursor-pointer hover:opacity-90"
+                                    />
+                                ))}
                             </div>
-                          </div>
-                          
                         )}
+
                         <Lightbox
                             open={lightboxIndex >= 0}
                             close={() => setLightboxIndex(-1)}
