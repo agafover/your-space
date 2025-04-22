@@ -2,7 +2,7 @@ import {
   Instagram,
   Mail,
   Newspaper,
-  HelpCircle,
+  HelpCircle, Copyright
 } from "lucide-react"
 import { useEffect, useRef } from "react"
 
@@ -72,9 +72,12 @@ function Footer() {
         <div>
           <h4 className="font-semibold mb-2">Контакты</h4>
           <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-            <li className="flex items-center gap-2">
-              <Mail size={16} /> community.yourspace@gmail.com
-            </li>
+            <div className="flex items-center gap-2">
+              <Mail size={16} className="shrink-0" />
+              <a href="mailto:community.yourspace@gmail.com" className="text-gray-700 hover:underline">
+                community.yourspace@gmail.com
+              </a>
+            </div>
             <li className="flex items-center gap-2">
               <HelpCircle size={16} /> FAQ
             </li>

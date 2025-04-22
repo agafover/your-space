@@ -1,4 +1,4 @@
-import {  Instagram, BookOpen, CalendarDays, Users, Calendar, Clock3, MapPin } from "lucide-react"
+import { Instagram, BookOpen, CalendarDays, Users, Calendar, Clock3, MapPin } from "lucide-react"
 import { Link } from "react-router-dom"
 import BookCard from "../components/BookCard"
 
@@ -9,7 +9,6 @@ const currentBook = {
   image: "/books/oxota.jpg",
   description: "«Охота на маленькую щуку» — одновременно трогательная история любви и затейливое фэнтези. Роман-погружение в самобытный фольклор Лапландии и современную финскую жизнь. Это роман-притча, роман-сказка про большую любовь, случайное предательство, преодоление и прощение себя."
 }
-
 
 const calendarEvents = [
   {
@@ -75,17 +74,17 @@ function Home() {
       </section>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center max-w-7xl mx-auto px-4 pb-16">
-        <div className="p-6 bg-white dark:bg-brand-dark rounded-xl shadow hover:shadow-md transition">
+        <div className="p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
           <BookOpen className="mx-auto text-brand-dark dark:text-brand mb-3" size={32} />
           <h3 className="text-lg font-semibold text-brand-text dark:text-brand-light mb-2">Книжный клуб</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">Обсуждаем вдохновляющие книги в уютной атмосфере.</p>
         </div>
-        <div className="p-6 bg-white dark:bg-brand-dark rounded-xl shadow hover:shadow-md transition">
+        <div className="p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
           <CalendarDays className="mx-auto text-brand-dark dark:text-brand mb-3" size={32} />
           <h3 className="text-lg font-semibold text-brand-text dark:text-brand-light mb-2">Мероприятия</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">Встречи, лекции и творческие вечера в Праге и онлайн.</p>
         </div>
-        <div className="p-6 bg-white dark:bg-brand-dark rounded-xl shadow hover:shadow-md transition">
+        <div className="p-6 bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-md transition">
           <Users className="mx-auto text-brand-dark dark:text-brand mb-3" size={32} />
           <h3 className="text-lg font-semibold text-brand-text dark:text-brand-light mb-2">Комьюнити</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">Делимся опытом и поддержкой с женщинами из разных сфер.</p>
@@ -94,29 +93,30 @@ function Home() {
 
       <section className="max-w-7xl mx-auto px-4 pb-20">
         <h2 className="text-2xl font-bold text-left mb-6 text-brand-text dark:text-brand-light">В этом месяце мы читаем</h2>
-        <div className="bg-white dark:bg-brand-dark shadow rounded-xl p-6 flex flex-col md:flex-row gap-6">
+        <div className="bg-white dark:bg-brand-text shadow rounded-xl p-6 flex flex-col md:flex-row gap-6">
           <img src={currentBook.image} alt={currentBook.title} className="w-full md:w-64 h-auto rounded-lg object-cover" />
-          <div>
+          <div className="text-left md:text-center md:flex-1 md:flex md:flex-col md:justify-center">
             <h3 className="text-xl font-bold text-brand-dark dark:text-brand-light mb-1">{currentBook.title}</h3>
             <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{currentBook.author}</p>
-            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line line-clamp-6">{currentBook.description}</p>
-            <Link to="/books" className="text-sm mt-2 inline-block text-pink-600 hover:underline">Подробнее</Link>
+            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line mb-2">{currentBook.description}</p>
+            <Link to="/books#current" className="text-sm mt-2 inline-block text-brand-dark dark:text-brand-light hover:underline">Подробнее</Link>
           </div>
         </div>
       </section>
 
+      {/* Events */}
       <section className="max-w-7xl mx-auto px-4 pb-20">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-brand-text dark:text-brand-light">Ближайшие мероприятия</h2>
-          <Link to="/calendar" className="text-sm text-pink-600 hover:underline">Посмотреть все →</Link>
+          <h2 className="text-2xl font-bold text-left text-brand-text dark:text-brand-light">Ближайшие мероприятия</h2>
+          <Link to="/calendar" className="text-brand-dark dark:text-brand-light text-sm hover:underline">Посмотреть все →</Link>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           {calendarEvents.map((event, index) => (
-            <div key={index} className="bg-white dark:bg-brand-dark rounded-xl shadow p-6 text-left">
-              <p className="text-sm text-rose-600 mb-1 flex items-center gap-1"><Calendar className="w-4 h-4" /> {event.date}</p>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-1 flex items-center gap-1"><Clock3 className="w-4 h-4" /> {event.time}</p>
+            <div key={index} className="bg-white dark:bg-brand-text rounded-xl shadow p-6 text-left">
+              <p className="text-sm text-brand-dark dark:text-brand-light mb-1 flex items-center gap-1"><Calendar size={16} /> {event.date}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-1 flex items-center gap-1"><Clock3 size={16} />{event.time}</p>
               <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-1">{event.title}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1"><MapPin className="w-4 h-4" /> {event.format}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-1"><MapPin size={16} /> {event.format}</p>
             </div>
           ))}
         </div>

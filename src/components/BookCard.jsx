@@ -1,19 +1,19 @@
-import { Star } from "lucide-react"
+import { Star, Instagram } from "lucide-react"
 import { useState } from "react"
-import { Instagram } from "lucide-react"
 
-function BookCard({ book }) {
-  const [showDescription, setShowDescription] = useState(false)
-
+function BookCard({ book, expanded, onToggle }) {
   return (
-    <div className="bg-white dark:bg-brand-dark rounded-xl shadow hover:shadow-md transition overflow-hidden group flex flex-col h-full">
+    <div
+      id={`book-${book.title.replace(/\s+/g, "-")}`}
+      className={`bg-white dark:bg-brand-dark rounded-xl shadow transition overflow-hidden ${expanded ? "col-span-full p-6 flex flex-col lg:flex-row gap-6" : "flex flex-col h-full"}`}
+    >
       <img
         src={book.image || "/placeholder.jpg"}
         alt={book.title}
-        className="w-full h-60 object-contain"
+        className={`rounded-lg ${expanded ? "w-full max-w-xs object-contain max-h-96" : "w-full h-60 object-contain"}`}
       />
 
-      <div className="p-4 flex flex-col flex-1">
+      <div className={`flex flex-col ${expanded ? "flex-1" : "p-4 flex-1"}`}>
         <h3 className="text-lg font-semibold text-brand-dark dark:text-brand-light mb-1">
           {book.title}
         </h3>
@@ -56,24 +56,17 @@ function BookCard({ book }) {
           </p>
         )}
 
-
-        <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-3 mb-2">
+        <p className={`text-sm text-gray-700 dark:text-gray-300 ${expanded ? "whitespace-pre-line" : "line-clamp-3 mb-2"}`}>
           {book.description}
         </p>
 
-        <div className="mt-auto">
+        <div className="mt-2">
           <button
-            onClick={() => setShowDescription((prev) => !prev)}
+            onClick={onToggle}
             className="text-sm text-brand-text hover:underline"
           >
-            {showDescription ? "Скрыть" : "Подробнее"}
+            {expanded ? "Скрыть" : "Подробнее"}
           </button>
-
-          {showDescription && (
-            <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-              {book.description}
-            </p>
-          )}
 
           {book.instagram && (
             <a
@@ -81,7 +74,8 @@ function BookCard({ book }) {
               target="_blank"
               rel="noopener noreferrer"
               className="block text-sm text-brand-dark hover:underline"
-            >              Instagram
+            >
+              Instagram
             </a>
           )}
         </div>

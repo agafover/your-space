@@ -1,3 +1,4 @@
+import { Heart} from 'lucide-react'
 function About() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-12 text-center">
@@ -24,7 +25,7 @@ function About() {
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 border border-brand-dark text-brand-dark px-4 py-2 rounded-xl hover:bg-brand-dark hover:text-white transition"
       >
-        💖 Стать частью сообщества
+        <Heart /> Стать частью сообщества
       </a>
     </div>
   )

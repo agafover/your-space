@@ -7,7 +7,6 @@ const navigation = [
   { name: "Главная", to: "/" },
   { name: "О нас", to: "/about" },
   { name: "Книжный клуб", to: "/books" },
-  { name: "Культура", to: "/culture" },
   { name: "Мероприятия", to: "/events" },
   { name: "Афиша", to: "/calendar" },
   { name: "Образование", to: "/education" },
