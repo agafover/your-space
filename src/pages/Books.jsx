@@ -119,13 +119,13 @@ function Books() {
           </h2>
           <p className="text-md text-gray-600 dark:text-gray-300 mb-2">{currentBook.author}</p>
           <p className="text-gray-800 dark:text-gray-200 whitespace-pre-line mb-4">{currentBook.description}</p>
-
           <a
             href="#"
-            className="px-4 py-2 rounded-lg border border-brand-dark dark:border-brand-light text-sm hover:bg-brand-dark hover:text-white dark:hover:bg-brand-light dark:hover:text-brand-dark transition"
+            className="block w-full sm:inline px-4 py-2 rounded-lg border border-brand-dark dark:border-brand-light text-sm hover:bg-brand-dark hover:text-white dark:hover:bg-brand-light dark:hover:text-brand-dark transition text-center break-words"
           >
             Присоединиться к обсуждению
           </a>
+
         </div>
       </section>
 

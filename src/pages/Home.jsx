@@ -112,7 +112,7 @@ function Home() {
       <section className="max-w-7xl mx-auto px-4 pb-20">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-left text-brand-text dark:text-brand-light">Ближайшие мероприятия</h2>
-          <Link to="/calendar" className="text-brand-dark dark:text-brand-light text-sm hover:underline">Посмотреть все →</Link>
+          <Link to="/calendar" className=" font-bold text-brand-dark dark:text-brand-light text-sm hover:underline">Показать все </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           {calendarEvents.map((event, index) => (
