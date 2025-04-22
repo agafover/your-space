@@ -7,10 +7,7 @@ import Home from "./pages/Home"
 import About from "./pages/About"
 import Books from "./pages/Books"
 import Calendar from "./pages/Calendar"
-import Culture from "./pages/Culture"
-import Education from "./pages/Education"
 import Events from "./pages/Events"
-import Trips from "./pages/Trips"
 import Contacts from "./pages/Contacts"
 import NotFound from "./pages/NotFound"
 
@@ -32,10 +29,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/books" element={<Books />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/culture" element={<Culture />} />
-            <Route path="/education" element={<Education />} />
             <Route path="/events" element={<Events />} />
-            <Route path="/trips" element={<Trips />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
