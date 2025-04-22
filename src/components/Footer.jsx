@@ -54,7 +54,6 @@ function Footer() {
             <li><a href="/books" className="hover:underline">Книжный клуб</a></li>
             <li><a href="/events" className="hover:underline">Мероприятия</a></li>
             <li><a href="/calendar" className="hover:underline">Афиша</a></li>
-            <li><a href="/education" className="hover:underline">Образование</a></li>
             <li><a href="/about" className="hover:underline">О нас</a></li>
           </ul>
         </div>
