@@ -48,7 +48,7 @@ function EventCard({ event, expanded, onToggle }) {
                     </div>
                 )}
 
-                <h3 className="text-lg font-semibold text-brand-dark dark:text-brand-light mb-2">
+                <h3 className="text-lg font-bold text-brand-dark dark:text-brand-light mb-2">
                     {event.title}
                 </h3>
 
