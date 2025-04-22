@@ -64,13 +64,14 @@ function Home() {
           </div>
         </div>
 
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 flex justify-end pr-4">
           <img
             src="yourspace.jpg"
             alt="Книги и сообщество"
-            className="w-full max-w-md mx-auto rounded-xl shadow"
+            className="w-80 h-80 mx-auto md:mx-0 rounded-full shadow object-cover"
           />
         </div>
+
       </section>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center max-w-7xl mx-auto px-4 pb-16">
