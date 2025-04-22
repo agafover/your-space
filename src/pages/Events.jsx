@@ -54,6 +54,13 @@ const events = [
       "/images/dresden/photo_2025-04-22_13-50-27.jpg",
       "/images/dresden/photo_2025-04-22_13-50-28.jpg",
       "/images/dresden/photo_2025-04-22_13-50-35.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-53.jpg",
+      "/images/dresden/photo_2025-04-22_13-50-59.jpg",
+      "/images/dresden/photo_2025-04-22_13-51-03.jpg",
+      "/images/dresden/photo_2025-04-22_13-51-04.jpg",
+      "/images/dresden/photo_2025-04-22_13-51-07.jpg",
+      "/images/dresden/photo_2025-04-22_13-51-09.jpg",
+      "/images/dresden/photo_2025-04-22_13-51-14.jpg",
     ],
   },
 ]

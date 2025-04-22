@@ -3,6 +3,57 @@ import { useState } from "react"
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
 
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useRef } from "react"
+
+function ImageGallery({ images, onClickImage }) {
+    const scrollRef = useRef(null)
+
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const container = scrollRef.current
+            container.scrollBy({ left: direction === "left" ? -300 : 300, behavior: "smooth" })
+        }
+    }
+
+    return (
+        <div className="relative mt-3">
+            {/* Галерея */}
+            <div ref={scrollRef} className="flex gap-2 overflow-x-auto no-scrollbar">
+                {images.slice(1).map((img, i) => (
+                    <img
+                        key={i}
+                        src={img}
+                        alt="mini"
+                        onClick={() => onClickImage(i + 1)}
+                        className="h-24 w-24 object-cover rounded-md flex-shrink-0 cursor-pointer hover:opacity-90"
+                    />
+                ))}
+            </div>
+
+            {/* Стрелки */}
+            {images.length > 10 && (
+                <>
+                    <button
+                        onClick={() => scroll("left")}
+                        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100"
+                    >
+                        <ChevronLeft size={20} />
+                    </button>
+
+                    <button
+                        onClick={() => scroll("right")}
+                        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100"
+                    >
+                        <ChevronRight size={20} />
+                    </button>
+                </>
+            )}
+        </div>
+    )
+}
+
+
 function EventCard({ event, expanded, onToggle }) {
     const [lightboxIndex, setLightboxIndex] = useState(-1)
     const tagColors = {
@@ -75,17 +126,10 @@ function EventCard({ event, expanded, onToggle }) {
                             </a>
                         )}
                         {event.images?.length > 1 && (
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                                {event.images.slice(1).map((img, i) => (
-                                    <img
-                                        key={i}
-                                        src={img}
-                                        alt={event.title}
-                                        onClick={() => setLightboxIndex(i + 1)}
-                                        className="rounded-md object-cover w-full h-32 cursor-pointer hover:opacity-90"
-                                    />
-                                ))}
-                            </div>
+                            <ImageGallery
+                                images={event.images}
+                                onClickImage={(i) => setLightboxIndex(i)}
+                            />
                         )}
 
                         <Lightbox
