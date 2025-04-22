@@ -1,4 +1,4 @@
-import { CalendarDays, Instagram } from "lucide-react"
+import { CalendarDays, Instagram, Lock, Unlock } from "lucide-react"
 import { useState } from "react"
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
@@ -64,6 +64,8 @@ function EventCard({ event, expanded, onToggle }) {
         "Образование": "bg-orange-100 text-orange-700",
         "Спорт": "bg-red-100 text-red-700",
         "Книги": "bg-pink-100 text-pink-700",
+        "Открытое мероприятие": "bg-green-100 text-green-800",
+        "Закрытое мероприятие": "bg-red-100 text-red-800",
     }
 
 
@@ -87,20 +89,37 @@ function EventCard({ event, expanded, onToggle }) {
                     <CalendarDays size={16} className="stroke-rose-600" />
                     {event.date}
                 </p>
+                {/* Тип мероприятия (мастер-класс, культура и т.д.) */}
                 {event.tags && (
                     <div className="flex flex-wrap gap-2 mb-2">
                         {event.tags.map((tag, i) => (
                             <span
                                 key={i}
-                                className={`text-xs font-medium px-2 py-1 rounded-full ${tagColors[tag] || "bg-gray-100 text-gray-700"
-                                    }`}
+                                className={`text-xs font-medium px-2 py-1 rounded-full ${tagColors[tag] || "bg-gray-100 text-gray-700"}`}
                             >
                                 {tag}
                             </span>
-
                         ))}
                     </div>
                 )}
+
+                {/* Тип доступа (открытое/закрытое) */}
+                {event.access && (
+                    <div className="mb-2">
+                        <span
+                            className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${tagTypes[event.access] || "bg-gray-100 text-gray-700"}`}
+                        >
+                            {event.access === "Открытое мероприятие" ? (
+                                <Unlock size={14} className="stroke-current" />
+                            ) : (
+                                <Lock size={14} className="stroke-current" />
+                            )}
+                            {event.access}
+                        </span>
+                    </div>
+                )}
+
+
 
                 <h3 className="text-lg font-bold text-brand-dark dark:text-brand-light mb-2">
                     {event.title}

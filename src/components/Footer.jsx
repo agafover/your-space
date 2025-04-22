@@ -50,12 +50,12 @@ function Footer() {
         {/* Навигация */}
         <div>
           <h4 className="font-semibold mb-2">Навигация</h4>
-          <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-            <li><a href="/books">Книжный клуб</a></li>
-            <li><a href="/events">Мероприятия</a></li>
-            <li><a href="/calendar">Афиша</a></li>
-            <li><a href="/education">Образование</a></li>
-            <li><a href="/about">О нас</a></li>
+          <ul className="space-y-1 text-gray-600 dark:text-gray-300 ">
+            <li><a href="/books" className="hover:underline">Книжный клуб</a></li>
+            <li><a href="/events" className="hover:underline">Мероприятия</a></li>
+            <li><a href="/calendar" className="hover:underline">Афиша</a></li>
+            <li><a href="/education" className="hover:underline">Образование</a></li>
+            <li><a href="/about" className="hover:underline">О нас</a></li>
           </ul>
         </div>
 
@@ -63,9 +63,24 @@ function Footer() {
         <div>
           <h4 className="font-semibold mb-2">Сообщество</h4>
           <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-            <li><a href="#">Присоединиться</a></li>
-            <li><a href="#">Правила</a></li>
+            <li>
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScu1AP1n_iihe5KNLnAvnqLKSYN6-T72syL-cTzJ2f9lF0FyQ/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Присоединиться
+              </a>
+            </li>
+            <li>
+              <a href="/faq" className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:underline">
+                <HelpCircle size={16} />
+                FAQ
+              </a>
+            </li>
           </ul>
+
         </div>
 
         {/* Контакты */}
@@ -77,10 +92,7 @@ function Footer() {
               <a href="mailto:community.yourspace@gmail.com" className="text-gray-700 hover:underline">
                 community.yourspace@gmail.com
               </a>
-            </div>
-            <li className="flex items-center gap-2">
-              <HelpCircle size={16} /> FAQ
-            </li>
+            </div>         
           </ul>
         </div>
       </div>

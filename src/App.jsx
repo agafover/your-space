@@ -10,6 +10,7 @@ import Calendar from "./pages/Calendar"
 import Events from "./pages/Events"
 import Contacts from "./pages/Contacts"
 import NotFound from "./pages/NotFound"
+import FAQ from "./pages/FAQ"
 
 
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/events" element={<Events />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
