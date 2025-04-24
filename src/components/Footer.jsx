@@ -88,7 +88,7 @@ function Footer() {
           <ul className="space-y-2 text-gray-600 dark:text-gray-300">
             <div className="flex items-center gap-2">
               <Mail size={16} className="shrink-0" />
-              <a href="mailto:community.yourspace@gmail.com" className="text-gray-700 hover:underline">
+              <a href="mailto:community.yourspace@gmail.com" className="text-gray-700 dark:text-gray-300 hover:underline">
                 community.yourspace@gmail.com
               </a>
             </div>         
@@ -97,7 +97,7 @@ function Footer() {
       </div>
 
       <p className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
-        © {new Date().getFullYear()} Your Space. Все права защищены.
+        © {new Date().getFullYear()} Your Space.
       </p>
     </footer>
   )

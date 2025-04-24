@@ -104,7 +104,7 @@ function Books() {
       </h1>
 
       {/* Current book */}
-      <section id="current" className="flex flex-col lg:flex-row gap-8 items-start mb-12 bg-white dark:bg-brand-dark p-6 rounded-xl shadow">
+      <section id="current" className="flex flex-col lg:flex-row gap-8 items-start mb-12 bg-cream dark:bg-brand-text p-6 rounded-xl shadow">
         {currentBook.image && (
           <img
             src={currentBook.image}
@@ -130,7 +130,7 @@ function Books() {
       </section>
 
       {/* Other books */}
-      <h2 className="text-xl font-semibold mb-4 text-brand-dark dark:text-brand-light flex justify-between items-center">
+      <h2 className="text-xl font-semibold mb-4 text-brand-text dark:text-brand-light flex justify-between items-center">
         <span>Другие книги</span>
         {filteredBooks.length > 4 && (
           <button
@@ -179,6 +179,7 @@ function Books() {
       </div>
     </div>
   )
+
 }
 
 export default Books

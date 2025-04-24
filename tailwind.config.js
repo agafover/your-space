@@ -8,11 +8,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: '#FDFAF7',
-        'brand-dark': '#924A53',
-        'brand-light': '#f4e3df',
-        'brand-text': '#3b1e1e',
-        'brand-circle': '#f4e8df',
+        // brand: '#FDFAF7',
+        // 'brand-dark': '#924A53',
+        // 'brand-light': '#f4e3df',
+        // 'brand-text': '#3b1e1e',
+        // 'brand-circle': '#f4e8df',
+
+        'brand-dark': '#7A3E46',       // глубокий бордово-розовый (основной)
+        'brand-light': '#C98B97',            // очень светлый фон сайта
+        'brand': '#FAF4F4',      // розовый из логотипа (фон карточек, иконок)
+        'brand-text': '#5E2B33',       // насыщенный цвет текста
+        'accent': '#DCA2AF',           // мягкий акцент (например, теги)
+        'cream': '#FDF8F7',            // фоновые блоки, секции
+
+        'card': '#ebcbcb',           // цвет карточек
+        'light-violet': '#c1a8ad', // цвет текста в карточках
 
       },
       keyframes: {

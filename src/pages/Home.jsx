@@ -41,7 +41,7 @@ function Home() {
           <p className="italic text-lg text-brand-dark dark:text-brand-light mb-4">
             We are many voices, one space
           </p>
-          <p className="text-xl text-brand-text dark:text-brand-circle mb-6">
+          <p className="text-xl text-brand-text dark:text-cream mb-6">
             Женское сообщество в Праге — твоё пространство для самовыражения, поддержки и роста.
             Мы читаем, встречаемся, обсуждаем и вдохновляем друг друга.
           </p>
@@ -49,7 +49,7 @@ function Home() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               to="/books"
-              className="bg-brand-dark text-white px-5 py-2 rounded-lg hover:bg-brand-light hover:text-brand-dark transition"
+              className="bg-brand-dark dark:bg-brand-text text-white px-5 py-2 rounded-lg hover:bg-brand-light hover:text-brand-dark transition"
             >
               Книжный клуб
             </Link>
@@ -57,7 +57,7 @@ function Home() {
               href="https://docs.google.com/forms/d/e/1FAIpQLScu1AP1n_iihe5KNLnAvnqLKSYN6-T72syL-cTzJ2f9lF0FyQ/viewform"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-brand-dark dark:border-brand-light text-brand-dark dark:text-brand-light px-5 py-2 rounded-lg transition hover:bg-brand-dark hover:text-white dark:hover:bg-brand-light dark:hover:text-brand-dark"
+              className="inline-flex items-center gap-2 border border-brand-dark dark:border-white text-brand-dark dark:text-white px-5 py-2 rounded-lg transition hover:bg-brand-dark hover:text-white dark:hover:bg-brand-light dark:hover:bg-brand-text"
             >
               Хочешь к нам в сообщество? Заполни анкету!
             </a>

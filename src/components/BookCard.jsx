@@ -1,20 +1,23 @@
 import { Star, Instagram } from "lucide-react"
-import { useState } from "react"
 
 function BookCard({ book, expanded, onToggle }) {
   return (
     <div
       id={`book-${book.title.replace(/\s+/g, "-")}`}
-      className={`bg-white dark:bg-brand-dark rounded-xl shadow transition overflow-hidden ${expanded ? "col-span-full p-6 flex flex-col lg:flex-row gap-6" : "flex flex-col h-full"}`}
+      className={`bg-cream dark:bg-brand-text rounded-xl shadow transition overflow-hidden ${
+        expanded ? "col-span-full p-6 flex flex-col lg:flex-row gap-6" : "flex flex-col h-full"
+      }`}
     >
       <img
         src={book.image || "/placeholder.jpg"}
         alt={book.title}
-        className={`rounded-lg ${expanded ? "w-full max-w-xs object-contain max-h-96" : "w-full h-60 object-contain"}`}
+        className={`rounded-lg ${
+          expanded ? "w-full max-w-xs object-contain max-h-96" : "w-full h-60 object-contain"
+        }`}
       />
 
       <div className={`flex flex-col ${expanded ? "flex-1" : "p-4 flex-1"}`}>
-        <h3 className="text-lg font-semibold text-brand-dark dark:text-brand-light mb-1">
+        <h3 className="text-lg font-semibold text-brand-text dark:text-brand-light mb-1">
           {book.title}
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">{book.author}</p>
@@ -29,11 +32,8 @@ function BookCard({ book, expanded, onToggle }) {
               if (i < whole) {
                 fillColor = "#facc15"
               } else if (i === whole) {
-                if (decimal >= 0.5) {
-                  fillColor = "#FDE279"
-                } else if (decimal > 0.0) {
-                  fillColor = "#FDEDBD"
-                }
+                if (decimal >= 0.5) fillColor = "#FDE279"
+                else if (decimal > 0.0) fillColor = "#FDEDBD"
               }
 
               return (
@@ -56,14 +56,18 @@ function BookCard({ book, expanded, onToggle }) {
           </p>
         )}
 
-        <p className={`text-sm text-gray-700 dark:text-gray-300 ${expanded ? "whitespace-pre-line" : "line-clamp-3 mb-2"}`}>
+        <p
+          className={`text-sm text-brand-text dark:text-gray-200 ${
+            expanded ? "whitespace-pre-line" : "line-clamp-3 mb-2"
+          }`}
+        >
           {book.description}
         </p>
 
-        <div className="mt-2">
+        <div className="mt-2 space-y-1">
           <button
             onClick={onToggle}
-            className="text-sm text-brand-text hover:underline"
+            className="text-sm text-brand-dark hover:underline dark:text-brand-light"
           >
             {expanded ? "Скрыть" : "Подробнее"}
           </button>
@@ -73,7 +77,7 @@ function BookCard({ book, expanded, onToggle }) {
               href={`https://www.instagram.com/p/${book.instagram}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-sm text-brand-dark hover:underline"
+              className="block text-sm text-brand-dark dark:text-brand-light hover:underline"
             >
               Instagram
             </a>
