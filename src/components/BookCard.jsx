@@ -4,7 +4,7 @@ function BookCard({ book, expanded, onToggle }) {
   return (
     <div
       id={`book-${book.title.replace(/\s+/g, "-")}`}
-      className={`bg-cream dark:bg-brand-text rounded-xl shadow transition overflow-hidden ${
+      className={`bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${
         expanded ? "col-span-full p-6 flex flex-col lg:flex-row gap-6" : "flex flex-col h-full"
       }`}
     >
@@ -57,7 +57,7 @@ function BookCard({ book, expanded, onToggle }) {
         )}
 
         <p
-          className={`text-sm text-brand-text dark:text-gray-200 ${
+          className={`text-sm text-gray-800 dark:text-gray-200 ${
             expanded ? "whitespace-pre-line" : "line-clamp-3 mb-2"
           }`}
         >

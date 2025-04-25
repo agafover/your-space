@@ -1,4 +1,4 @@
-import { BookOpen, Search } from "lucide-react"
+import { BookOpen, Book, BookPlus, Search, Vote, Trophy, Lightbulb, Speech, ChevronRight } from "lucide-react"
 import BookCard from "../components/BookCard"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
@@ -104,7 +104,7 @@ function Books() {
       </h1>
 
       {/* Current book */}
-      <section id="current" className="flex flex-col lg:flex-row gap-8 items-start mb-12 bg-cream dark:bg-brand-text p-6 rounded-xl shadow">
+      <section id="current" className="flex flex-col lg:flex-row gap-8 items-start mb-12 bg-white dark:bg-brand-text p-6 rounded-xl shadow">
         {currentBook.image && (
           <img
             src={currentBook.image}
@@ -129,16 +129,76 @@ function Books() {
         </div>
       </section>
 
+      {/* Как проходит */}
+      <section className="max-w-5xl mx-auto px-4 py-10">
+        <h2 className="text-2xl font-bold text-brand-dark dark:text-brand-light mb-8 text-center">
+          Как проходит обсуждение книги?
+        </h2>
+
+        <ul className="text-left text-gray-600 dark:text-gray-300 space-y-4 text-base leading-relaxed">
+          <li className="flex items-start gap-3">
+            <span className="text-lg text-brand-dark dark:text-brand-light"><Book /></span>
+            <span>
+              Каждые 3 месяца мы вместе выбираем новую книгу для чтения.
+            </span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-lg text-brand-dark dark:text-brand-light"><BookPlus /></span>
+            <span>
+              Каждая участниица может предложить свою книгу в общий список.
+            </span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-lg text-brand-dark dark:text-brand-light"><Vote /></span>
+            <span>
+              После этого проходит голосование в телеграм-канале (доступ к которому ты получаешь после заполнения анкеты).
+            </span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-lg text-brand-dark dark:text-brand-light"><Trophy /></span>
+            <span>
+              Топ-3 книги попадают в список на ближайшие 3 месяца.
+            </span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-lg text-brand-dark dark:text-brand-light"><Speech /></span>
+            <span>
+              Обсуждение проходит всегда в конце месяца. Дата и время обсуждения выбираются голосованием телеграм-канале.
+            </span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-lg text-brand-dark dark:text-brand-light"><Lightbulb /></span>
+            <span>
+              Мы всегда рады твоим идеям и вдохновению!
+            </span>
+          </li>
+        </ul>
+
+        <div className="text-center">
+          <a
+            href="https://t.me/Your_Space_1bot" // ← замени на ссылку своего бота
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-6 py-2 rounded-xl border border-brand-dark dark:border-brand-light text-brand-dark dark:text-brand-light hover:bg-brand-dark hover:text-white dark:hover:bg-brand-light dark:hover:text-brand-dark transition"
+          >
+            Предложить книгу
+          </a>
+        </div>
+      </section>
+
+
       {/* Other books */}
       <h2 className="text-xl font-semibold mb-4 text-brand-text dark:text-brand-light flex justify-between items-center">
         <span>Другие книги</span>
         {filteredBooks.length > 4 && (
           <button
             onClick={() => setShowAll(!showAll)}
-            className="text-sm text-brand-dark dark:text-brand-light hover:underline"
+            className="text-sm text-brand-dark dark:text-brand-light hover:underline flex items-center gap-1"
           >
             {showAll ? "Скрыть" : "Показать все"}
+            <ChevronRight size={16} />
           </button>
+
         )}
       </h2>
 

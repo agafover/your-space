@@ -62,6 +62,15 @@ const events = [
       "/images/dresden/photo_2025-04-22_13-51-14.jpg",
     ],
   },
+  {    
+    title: `Music quiz "Попса"`,
+    date: "24.04.2025",
+    description: `В этот вечер мы собрались в уютном кафе, чтобы проверить свои музыкальные знания и посоревноваться в дружеской атмосфере. 🎶💃\n\nКаждый из нас был готов к вызову, 
+    и мы с удовольствием вспоминали любимые хиты, а так же узнавали новые песни. В этот раз мы заняли 5 место. Однако, мы планируем вернуться и взять реванш! 
+    💪\n\nСпасибо всем участникам за отличное настроение и незабываемые моменты!`,
+    tags: ["Развлечения", "Закрытое мероприятие"],
+    images: ["/images/musicQuizEvent.png" ], 
+  },
 ]
 
 function Events() {
@@ -95,7 +104,7 @@ function Events() {
         <select
           value={selectedTag}
           onChange={(e) => setSelectedTag(e.target.value)}
-          className="w-full sm:w-1/2 px-4 py-2 border border-brand-dark dark:border-brand-light rounded-md bg-white dark:bg-brand-dark text-brand-text dark:text-brand-light"
+          className="w-full sm:w-1/2 px-4 py-2 border rounded-md bg-white dark:bg-brand-dark text-brand-text dark:text-brand-light"
         >
           <option value="Все">Все направления</option>
           <option value="Мастер-класс">Мастер-класс</option>
@@ -110,7 +119,7 @@ function Events() {
         <select
           value={accessFilter}
           onChange={(e) => setAccessFilter(e.target.value)}
-          className="w-full sm:w-1/2 px-4 py-2 border border-brand-dark dark:border-brand-light rounded-md bg-white dark:bg-brand-dark text-brand-text dark:text-brand-light"
+          className="w-full sm:w-1/2 px-4 py-2 border rounded-md bg-white dark:bg-brand-dark text-brand-text dark:text-brand-light"
         >
           <option value="Все">Формат мероприятия</option>
           <option value="Открытое мероприятие">Открытые</option>

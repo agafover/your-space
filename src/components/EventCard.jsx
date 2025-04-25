@@ -74,7 +74,7 @@ function EventCard({ event, expanded, onToggle }) {
 
     return (
         <div
-          className={`bg-cream dark:bg-brand-text rounded-xl shadow transition overflow-hidden ${expanded ? "lg:flex gap-6 col-span-2" : ""}`}
+          className={`bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${expanded ? "lg:flex gap-6 col-span-2" : ""}`}
         >
           <div className={`w-full ${expanded ? "lg:w-1/2" : ""} flex-shrink-0`}>
             <img
@@ -110,7 +110,7 @@ function EventCard({ event, expanded, onToggle }) {
             </h3>
       
             <p
-              className={`text-sm text-brand-text dark:text-gray-300 whitespace-pre-line ${expanded ? "mb-3" : "line-clamp-4 mb-2"}`}
+              className={`text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line ${expanded ? "mb-3" : "line-clamp-4 mb-2"}`}
             >
               {event.description}
             </p>
