@@ -1,5 +1,3 @@
-// Accept either the bare post shortcode or a pasted URL like
-// "https://www.instagram.com/p/SHORTCODE/" or "/reel/SHORTCODE/".
 export function sanitizeInstagramPostId(input) {
   if (!input) return ""
   const trimmed = String(input).trim()
@@ -8,31 +6,45 @@ export function sanitizeInstagramPostId(input) {
   return trimmed.replace(/^\/+|\/+$/g, "")
 }
 
-// Direct iframe to Instagram's /embed/ endpoint. This gives us exact control
-// over width and height, unlike the official embed.js script which picks its
-// own dimensions and ignores wrapper constraints.
+// Crop the Instagram embed to show only the photo area:
+//   - hide top header (~56px) via negative margin on the iframe
+//   - hide everything below the photo via overflow:hidden on a square wrapper
+// Carousel arrows / pagination dots still work inside the photo region.
 function InstagramEmbed({ postId }) {
   const clean = sanitizeInstagramPostId(postId)
   if (!clean) return null
 
+  const SIZE = 440          // photo edge (matches iframe width)
+  const HEADER_HEIGHT = 56  // Instagram embed header height
+  const IFRAME_TALL = 700   // tall enough to contain header + photo + extras
+
   return (
-    <iframe
-      src={`https://www.instagram.com/p/${clean}/embed/`}
-      title="Instagram post"
-      loading="lazy"
-      scrolling="no"
-      allow="encrypted-media"
+    <div
       style={{
-        display: "block",
-        margin: "0 auto",
         width: "100%",
-        maxWidth: "440px",
-        height: "500px",
-        border: "none",
+        maxWidth: `${SIZE}px`,
+        margin: "0 auto",
         borderRadius: "8px",
+        overflow: "hidden",
+        aspectRatio: "1 / 1",
         background: "#FFF",
       }}
-    />
+    >
+      <iframe
+        src={`https://www.instagram.com/p/${clean}/embed/`}
+        title="Instagram post"
+        loading="lazy"
+        scrolling="no"
+        allow="encrypted-media"
+        style={{
+          display: "block",
+          width: "100%",
+          height: `${IFRAME_TALL}px`,
+          border: "none",
+          marginTop: `-${HEADER_HEIGHT}px`,
+        }}
+      />
+    </div>
   )
 }
 
