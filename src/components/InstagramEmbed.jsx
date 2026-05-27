@@ -27,7 +27,7 @@ function InstagramEmbed({ postId }) {
         margin: "0 auto",
         width: "100%",
         maxWidth: "440px",
-        height: "560px",
+        height: "500px",
         border: "none",
         borderRadius: "8px",
         background: "#FFF",
