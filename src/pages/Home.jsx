@@ -76,7 +76,7 @@ function Home() {
           <img
             src="yourspace.jpg"
             alt="Книги и сообщество"
-            className="w-80 aspect-square mx-auto md:mx-0 rounded-full shadow object-cover"
+            className="w-80 aspect-square mx-auto md:mx-0 rounded-full shadow object-cover dark:invert dark:hue-rotate-180"
           />
         </div>
       </section>

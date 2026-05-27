@@ -1,7 +1,60 @@
-import { useEffect, useState } from "react"
-import { Plus, Edit2, Trash2, Save, X, Star } from "lucide-react"
+import { useEffect, useMemo, useState } from "react"
+import { Plus, Edit2, Trash2, Save, X, Star, AlertTriangle } from "lucide-react"
 import { supabase } from "../../lib/supabase"
 import ImageUploader from "../../components/admin/ImageUploader"
+
+function normalizeTitle(t) {
+  return (t ?? "").trim().toLowerCase().replace(/\s+/g, " ")
+}
+
+const MONTH_LABELS = [
+  "январь", "февраль", "март", "апрель", "май", "июнь",
+  "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь",
+]
+
+function MonthYearPicker({ value, onChange }) {
+  const [yearStr, monthStr] = (value || "-").split("-")
+  const year = yearStr || ""
+  const month = monthStr || ""
+
+  // Year range: 5 years back through 2 years ahead of current year.
+  const thisYear = new Date().getFullYear()
+  const years = []
+  for (let y = thisYear - 5; y <= thisYear + 2; y++) years.push(y)
+
+  function update(newYear, newMonth) {
+    if (!newYear || !newMonth) {
+      onChange("")
+    } else {
+      onChange(`${newYear}-${String(newMonth).padStart(2, "0")}`)
+    }
+  }
+
+  return (
+    <div className="flex gap-2">
+      <select
+        value={month}
+        onChange={(e) => update(year, e.target.value)}
+        className={`${inputCls} flex-1`}
+      >
+        <option value="">— месяц —</option>
+        {MONTH_LABELS.map((label, i) => (
+          <option key={i} value={String(i + 1).padStart(2, "0")}>{label}</option>
+        ))}
+      </select>
+      <select
+        value={year}
+        onChange={(e) => update(e.target.value, month)}
+        className={`${inputCls} w-28`}
+      >
+        <option value="">— год —</option>
+        {years.map((y) => (
+          <option key={y} value={String(y)}>{y}</option>
+        ))}
+      </select>
+    </div>
+  )
+}
 
 const emptyBook = {
   title: "",
@@ -14,7 +67,7 @@ const emptyBook = {
   rating: "",
 }
 
-function BookForm({ initial, onSave, onCancel, saving }) {
+function BookForm({ initial, onSave, onCancel, saving, otherBooks = [] }) {
   const [form, setForm] = useState({
     title: initial.title ?? "",
     author: initial.author ?? "",
@@ -31,6 +84,12 @@ function BookForm({ initial, onSave, onCancel, saving }) {
   function set(field, value) {
     setForm((f) => ({ ...f, [field]: value }))
   }
+
+  const duplicate = useMemo(() => {
+    const norm = normalizeTitle(form.title)
+    if (!norm) return null
+    return otherBooks.find((b) => normalizeTitle(b.title) === norm) ?? null
+  }, [form.title, otherBooks])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -54,12 +113,22 @@ function BookForm({ initial, onSave, onCancel, saving }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Название" required>
           <input type="text" required value={form.title} onChange={(e) => set("title", e.target.value)} className={inputCls} />
+          {duplicate && (
+            <div className="mt-2 flex items-start gap-2 text-xs p-2 rounded bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200 border border-yellow-200 dark:border-yellow-800/40">
+              <AlertTriangle size={14} className="shrink-0 mt-0.5" />
+              <span>
+                Такую книгу уже читали: <strong>«{duplicate.title}»</strong>
+                {duplicate.author && <> — {duplicate.author}</>}
+                {duplicate.read_month && <> ({duplicate.read_month.slice(0, 7)})</>}
+              </span>
+            </div>
+          )}
         </Field>
         <Field label="Автор" required>
           <input type="text" required value={form.author} onChange={(e) => set("author", e.target.value)} className={inputCls} />
         </Field>
-        <Field label="Месяц обсуждения" hint="только месяц и год">
-          <input type="month" value={form.read_month} onChange={(e) => set("read_month", e.target.value)} className={inputCls} />
+        <Field label="Месяц обсуждения">
+          <MonthYearPicker value={form.read_month} onChange={(v) => set("read_month", v)} />
         </Field>
         <Field label="Рейтинг (0–5)" hint="оставь пустым, если ещё нет">
           <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={(e) => set("rating", e.target.value)} className={inputCls} />
@@ -194,6 +263,7 @@ function AdminBooks() {
           <BookForm
             initial={emptyBook}
             saving={saving}
+            otherBooks={books}
             onSave={(payload) => handleSave(null, payload)}
             onCancel={() => setCreating(false)}
           />
@@ -210,6 +280,7 @@ function AdminBooks() {
                 <BookForm
                   initial={book}
                   saving={saving}
+                  otherBooks={books.filter((b) => b.id !== book.id)}
                   onSave={(payload) => handleSave(book.id, payload)}
                   onCancel={() => setEditingId(null)}
                 />
