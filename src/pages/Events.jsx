@@ -1,83 +1,63 @@
-import { useState } from "react"
-import { Search } from "lucide-react"
+import { useEffect, useState } from "react"
 import EventCard from "../components/EventCard"
+import { supabase } from "../lib/supabase"
 
-const events = [
-  {
-    title: "Плетениe Рождественских венков",
-    date: "29.11.2024",
-    description:
-      `✨ Уют, вдохновение и волшебство, созданное своими руками ✨\nНа нашем рождественском воркшопе мы собрались вместе, чтобы создать праздничные венки — каждый неповторимый, наполненный теплом, фантазией и заботой. 🌲💫\n\nБыло много смеха, общения и искренней радости — в этой атмосфере творчество рождалось легко и с любовью. 💖`,
-    instagram: "DDSHA_VNXGK",
-    tags: ["Мастер-класс", "Закрытое мероприятие"],
-    images: [
-      "/images/wreath-1.jpg",
-      "/images/wreath-2.jpg",
-      "/images/wreath-3.jpg",
-      "/images/wreath-4.jpg",
-      "/images/wreath-5.jpg",
-      "/images/wreath-6.jpg",
-      "/images/wreath-7.jpg",
-      "/images/wreath-9.jpg",
-      "/images/wreath-8.jpg",
-    ],
-  },
-  {
-    title: "Мадам Баттерфляй",
-    date: "13.12.2024",
-    description:
-      "Поход в Государственную оперу на оперу Джакомо Пуччини \"Мадам Баттерфляй\". Великолепные декорации, яркие костюмы и трогательная история любви сделали этот вечер незабываемым.",
-    instagram: "DD5EwaqO7Tc",
-    tags: ["Культура", "Закрытое мероприятие"],
-    images: [
-      "/images/opera-1.jpg",
-      "/images/opera-2.jpg",
-      "/images/opera-3.jpg",
-      "/images/opera-4.jpg",
-      "/images/opera-5.jpg",
-      "/images/opera-6.jpg",
-    ],
-  },
-  {
-    title: "Рождество в Дрездене",
-    date: "14.12.2024",
-    description:
-      `Поездка в Дрезден на рождественскую ярмарку. Мы погрузились в атмосферу праздника, насладились местной кухней, купили подарки для близких,       а так же купили на пробу Дубайский шоколад от Lindt.`,
-    instagram: "DEDqgALuBib",
-    tags: ["Поездки", "Закрытое мероприятие"],
-    images: [
-      "/images/dresden/photo_2025-04-22_13-50-29.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-23.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-24.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-25.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-27.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-28.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-35.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-53.jpg",
-      "/images/dresden/photo_2025-04-22_13-50-59.jpg",
-      "/images/dresden/photo_2025-04-22_13-51-03.jpg",
-      "/images/dresden/photo_2025-04-22_13-51-04.jpg",
-      "/images/dresden/photo_2025-04-22_13-51-07.jpg",
-      "/images/dresden/photo_2025-04-22_13-51-09.jpg",
-      "/images/dresden/photo_2025-04-22_13-51-14.jpg",
-    ],
-  },
-  {    
-    title: `Music quiz "Попса"`,
-    date: "24.04.2025",
-    description: `В этот вечер мы собрались в уютном кафе, чтобы проверить свои музыкальные знания и посоревноваться в дружеской атмосфере. 🎶💃\n\nКаждый из нас был готов к вызову, 
-    и мы с удовольствием вспоминали любимые хиты, а так же узнавали новые песни. В этот раз мы заняли 5 место. Однако, мы планируем вернуться и взять реванш! 
-    💪\n\nСпасибо всем участникам за отличное настроение и незабываемые моменты!`,
-    tags: ["Развлечения", "Закрытое мероприятие"],
-    images: ["/images/musicQuizEvent.png" ], 
-  },
-]
+function formatEventDate(isoDate) {
+  if (!isoDate) return ""
+  const [y, m, d] = isoDate.split("-")
+  return `${d}.${m}.${y}`
+}
 
 function Events() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedTag, setSelectedTag] = useState("Все")
   const [accessFilter, setAccessFilter] = useState("Все")
   const [expandedIndex, setExpandedIndex] = useState(null)
+  const [events, setEvents] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      setLoading(true)
+      const { data: eventRows, error: evErr } = await supabase
+        .from("events")
+        .select("*")
+        .order("event_date", { ascending: false })
+      if (cancelled) return
+      if (evErr) { setError(evErr.message); setLoading(false); return }
+
+      const eventIds = eventRows.map(e => e.id)
+      const { data: imageRows } = eventIds.length
+        ? await supabase
+            .from("event_images")
+            .select("*")
+            .in("event_id", eventIds)
+            .order("position", { ascending: true })
+        : { data: [] }
+
+      const imagesByEventId = new Map()
+      for (const img of imageRows ?? []) {
+        if (!imagesByEventId.has(img.event_id)) imagesByEventId.set(img.event_id, [])
+        imagesByEventId.get(img.event_id).push(img.image_url)
+      }
+
+      const adapted = eventRows.map(e => ({
+        id: e.id,
+        title: e.title,
+        description: e.description ?? "",
+        date: formatEventDate(e.event_date),
+        tags: e.tags ?? [],
+        instagram: e.instagram_post_id ?? undefined,
+        images: imagesByEventId.get(e.id) ?? (e.cover_url ? [e.cover_url] : []),
+      }))
+      setEvents(adapted)
+      setLoading(false)
+    }
+    load()
+    return () => { cancelled = true }
+  }, [])
 
   const filteredEvents = events.filter(event =>
     event.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
@@ -99,7 +79,6 @@ function Events() {
         Прошедшие мероприятия
       </h2>
 
-      {/* Фильтры */}
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <select
           value={selectedTag}
@@ -127,17 +106,22 @@ function Events() {
         </select>
       </div>
 
-      {/* Карточки */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {filteredEvents.map((event, index) => (
-          <EventCard
-            key={index}
-            event={event}
-            expanded={expandedIndex === index}
-            onToggle={() => setExpandedIndex(expandedIndex === index ? null : index)}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="py-20 text-center text-brand-text dark:text-brand-light">Загрузка мероприятий…</div>
+      ) : error ? (
+        <div className="py-20 text-center text-red-600">Не удалось загрузить: {error}</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {filteredEvents.map((event, index) => (
+            <EventCard
+              key={event.id}
+              event={event}
+              expanded={expandedIndex === index}
+              onToggle={() => setExpandedIndex(expandedIndex === index ? null : index)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
