@@ -30,6 +30,7 @@ function EventForm({ initial, initialImages, onSave, onCancel, saving }) {
     event_date: initial.event_date ?? "",
     tags: initial.tags ?? [],
     is_members_only: initial.is_members_only ?? true,
+    is_planned: initial.is_planned ?? false,
     instagram_post_id: initial.instagram_post_id ?? "",
     cover_url: initial.cover_url ?? "",
   })
@@ -65,6 +66,7 @@ function EventForm({ initial, initialImages, onSave, onCancel, saving }) {
       event_date: form.event_date,
       tags: form.tags,
       is_members_only: !!form.is_members_only,
+      is_planned: !!form.is_planned,
       instagram_post_id: form.instagram_post_id.trim() || null,
       cover_url: form.cover_url.trim() || images[0] || null,
     }
@@ -118,10 +120,16 @@ function EventForm({ initial, initialImages, onSave, onCancel, saving }) {
         </div>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-brand-text dark:text-night-text">
-        <input type="checkbox" checked={form.is_members_only} onChange={(e) => set("is_members_only", e.target.checked)} />
-        Закрытое мероприятие (только для участниц)
-      </label>
+      <div className="space-y-2">
+        <label className="flex items-center gap-2 text-sm text-brand-text dark:text-night-text">
+          <input type="checkbox" checked={form.is_planned} onChange={(e) => set("is_planned", e.target.checked)} />
+          Запланировано — показывать в Афише
+        </label>
+        <label className="flex items-center gap-2 text-sm text-brand-text dark:text-night-text">
+          <input type="checkbox" checked={form.is_members_only} onChange={(e) => set("is_members_only", e.target.checked)} />
+          Закрытое мероприятие (только для участниц)
+        </label>
+      </div>
 
       <div>
         <span className="block text-sm font-medium text-brand-text dark:text-night-text mb-2">
@@ -296,7 +304,12 @@ function AdminEvents() {
                   className="w-20 h-20 object-cover rounded"
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-brand-text dark:text-night-text truncate">{event.title}</h3>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-semibold text-brand-text dark:text-night-text truncate">{event.title}</h3>
+                    {event.is_planned && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">в афише</span>
+                    )}
+                  </div>
                   <p className="text-sm text-brand-text/70 dark:text-night-muted">{event.event_date}</p>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {event.tags?.map(tag => (

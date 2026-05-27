@@ -21,10 +21,9 @@ function Home() {
   useEffect(() => {
     let cancelled = false
     async function load() {
-      const today = new Date().toISOString().slice(0, 10)
       const [bookRes, eventsRes] = await Promise.all([
         supabase.from("books").select("*").eq("is_current", true).maybeSingle(),
-        supabase.from("events").select("*").gte("event_date", today).order("event_date", { ascending: true }).limit(3),
+        supabase.from("events").select("*").eq("is_planned", true).order("event_date", { ascending: true }).limit(3),
       ])
       if (cancelled) return
       if (!bookRes.error) setCurrentBook(bookRes.data)

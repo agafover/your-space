@@ -21,11 +21,10 @@ function Calendar() {
   useEffect(() => {
     let cancelled = false
     async function load() {
-      const today = new Date().toISOString().slice(0, 10)
       const { data, error } = await supabase
         .from("events")
         .select("*")
-        .gte("event_date", today)
+        .eq("is_planned", true)
         .order("event_date", { ascending: true })
       if (cancelled) return
       if (!error) setEvents(data ?? [])
