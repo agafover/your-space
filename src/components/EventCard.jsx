@@ -7,6 +7,7 @@ import {
 import { useState } from "react"
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
+import InstagramEmbed from "./InstagramEmbed"
 
 function EventCard({ event, expanded, onToggle }) {
     const [lightboxIndex, setLightboxIndex] = useState(-1)
@@ -39,8 +40,9 @@ function EventCard({ event, expanded, onToggle }) {
 
     return (
         <div
-          className={`bg-white dark:bg-night-surface rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${expanded ? "lg:flex gap-6 col-span-full" : ""}`}
+          className={`bg-white dark:bg-night-surface rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${expanded ? "col-span-full" : ""}`}
         >
+          <div className={expanded ? "lg:flex gap-6" : ""}>
           <div className={`relative group ${expanded ? "lg:w-1/2 flex-shrink-0" : "w-full"}`}>
             <img
               src={expanded ? currentImage : (images[0] || "/placeholder.jpg")}
@@ -139,6 +141,16 @@ function EventCard({ event, expanded, onToggle }) {
               />
             )}
           </div>
+          </div>
+
+          {expanded && event.instagram && (
+            <div className="px-4 pb-6 pt-2 border-t border-brand-dark/10 dark:border-night-border">
+              <p className="text-xs uppercase tracking-wide text-brand-text/60 dark:text-night-muted mb-3 text-center">
+                Фото с Instagram
+              </p>
+              <InstagramEmbed postId={event.instagram} />
+            </div>
+          )}
         </div>
       )
 }
