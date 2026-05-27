@@ -1,5 +1,3 @@
-import { useEffect } from "react"
-
 // Accept either the bare post shortcode or a pasted URL like
 // "https://www.instagram.com/p/SHORTCODE/" or "/reel/SHORTCODE/".
 export function sanitizeInstagramPostId(input) {
@@ -10,97 +8,31 @@ export function sanitizeInstagramPostId(input) {
   return trimmed.replace(/^\/+|\/+$/g, "")
 }
 
-// Module-level state: load the Instagram embed script exactly once per page.
-let scriptStatus = "idle" // "idle" | "loading" | "ready"
-const pendingProcess = []
-
-function ensureScript() {
-  if (scriptStatus === "ready") {
-    if (typeof window !== "undefined" && window.instgrm) {
-      window.instgrm.Embeds.process()
-    }
-    return
-  }
-  if (scriptStatus === "loading") return
-  if (typeof window === "undefined") return
-
-  scriptStatus = "loading"
-  const script = document.createElement("script")
-  script.src = "https://www.instagram.com/embed.js"
-  script.async = true
-  script.onload = () => {
-    scriptStatus = "ready"
-    if (window.instgrm) window.instgrm.Embeds.process()
-    pendingProcess.forEach((cb) => cb())
-    pendingProcess.length = 0
-  }
-  document.body.appendChild(script)
-}
-
-function processWhenReady(cb) {
-  if (scriptStatus === "ready") {
-    cb()
-  } else {
-    pendingProcess.push(cb)
-  }
-}
-
+// Direct iframe to Instagram's /embed/ endpoint. This gives us exact control
+// over width and height, unlike the official embed.js script which picks its
+// own dimensions and ignores wrapper constraints.
 function InstagramEmbed({ postId }) {
   const clean = sanitizeInstagramPostId(postId)
-
-  useEffect(() => {
-    ensureScript()
-    processWhenReady(() => {
-      if (window.instgrm) window.instgrm.Embeds.process()
-    })
-  }, [clean])
-
   if (!clean) return null
 
-  const permalink = `https://www.instagram.com/p/${clean}/`
-
-  // Crop the bottom social UI (likes / caption / "Add a comment") with
-  // overflow:hidden on a wrapper. We keep just the header + photo carousel.
   return (
-    <div
+    <iframe
+      src={`https://www.instagram.com/p/${clean}/embed/`}
+      title="Instagram post"
+      loading="lazy"
+      scrolling="no"
+      allow="encrypted-media"
       style={{
-        maxWidth: "450px",
-        maxHeight: "700px",
-        overflow: "hidden",
+        display: "block",
         margin: "0 auto",
-        borderRadius: "8px",
-        position: "relative",
         width: "100%",
+        maxWidth: "440px",
+        height: "560px",
+        border: "none",
+        borderRadius: "8px",
+        background: "#FFF",
       }}
-    >
-      <blockquote
-        className="instagram-media"
-        data-instgrm-permalink={permalink}
-        data-instgrm-version="14"
-        style={{
-          background: "#FFF",
-          border: 0,
-          margin: 0,
-          maxWidth: "100%",
-          minWidth: "326px",
-          padding: 0,
-          width: "100%",
-        }}
-      >
-        <div style={{ padding: "32px 16px", textAlign: "center", color: "#666", fontSize: "14px" }}>
-          Загрузка поста…
-          {" "}
-          <a
-            href={permalink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#c13584", textDecoration: "underline" }}
-          >
-            открыть в Instagram
-          </a>
-        </div>
-      </blockquote>
-    </div>
+    />
   )
 }
 
