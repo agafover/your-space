@@ -74,7 +74,7 @@ function EventCard({ event, expanded, onToggle }) {
 
     return (
         <div
-          className={`bg-white dark:bg-brand-text rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${expanded ? "lg:flex gap-6 col-span-2" : ""}`}
+          className={`bg-white dark:bg-night-surface rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${expanded ? "lg:flex gap-6 col-span-2" : ""}`}
         >
           <div className={`w-full ${expanded ? "lg:w-1/2" : ""} flex-shrink-0`}>
             <img
@@ -86,8 +86,8 @@ function EventCard({ event, expanded, onToggle }) {
           </div>
       
           <div className="p-4 flex-1">
-            <p className="text-sm text-brand-dark dark:text-brand-light mb-1 flex items-center gap-1">
-              <CalendarDays size={16} className="stroke-brand-dark dark:stroke-brand-light" />
+            <p className="text-sm text-brand-dark dark:text-night-text mb-1 flex items-center gap-1">
+              <CalendarDays size={16} className="stroke-brand-dark dark:stroke-rose" />
               {event.date}
             </p>
       
@@ -105,12 +105,12 @@ function EventCard({ event, expanded, onToggle }) {
               </div>
             )}
       
-            <h3 className="text-lg font-bold text-brand-text dark:text-brand-light mb-2">
+            <h3 className="text-lg font-bold text-brand-text dark:text-night-text mb-2">
               {event.title}
             </h3>
       
             <p
-              className={`text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line ${expanded ? "mb-3" : "line-clamp-4 mb-2"}`}
+              className={`text-sm text-gray-600 dark:text-night-text whitespace-pre-line ${expanded ? "mb-3" : "line-clamp-4 mb-2"}`}
             >
               {event.description}
             </p>
@@ -146,7 +146,7 @@ function EventCard({ event, expanded, onToggle }) {
       
             <button
               onClick={onToggle}
-              className="text-sm text-brand-dark dark:text-brand-light hover:underline mt-4"
+              className="text-sm text-brand-dark dark:text-night-text hover:underline mt-4"
             >
               {expanded ? "Скрыть" : "Подробнее"}
             </button>

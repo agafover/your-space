@@ -1,7 +1,8 @@
-import { BookOpen } from "lucide-react"
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import { AuthProvider } from "./lib/AuthContext"
+import ProtectedRoute from "./components/admin/ProtectedRoute"
 
 import Home from "./pages/Home"
 import About from "./pages/About"
@@ -12,35 +13,50 @@ import Contacts from "./pages/Contacts"
 import NotFound from "./pages/NotFound"
 import FAQ from "./pages/FAQ"
 
-
-
+import AdminLogin from "./pages/admin/AdminLogin"
+import AdminLayout from "./pages/admin/AdminLayout"
+import AdminDashboard from "./pages/admin/AdminDashboard"
+import AdminBooks from "./pages/admin/AdminBooks"
+import AdminEvents from "./pages/admin/AdminEvents"
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-brand text-brand-text dark:bg-brand-dark dark:text-brand-light">
-        {/* Навигация */}
-        <Header />
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-brand text-brand-text dark:bg-night dark:text-night-text">
+          <Header />
+          <main className="px-6 py-8">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/books" element={<Books />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/faq" element={<FAQ />} />
 
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<AdminDashboard />} />
+                <Route path="books" element={<AdminBooks />} />
+                <Route path="events" element={<AdminEvents />} />
+              </Route>
 
-        {/* Контент */}
-        <main className="px-6 py-8">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/books" element={<Books />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/contacts" element={<Contacts />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   )
 }
 
 export default App
-

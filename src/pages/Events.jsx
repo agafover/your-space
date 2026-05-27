@@ -66,16 +66,16 @@ function Events() {
   )
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10 dark:bg-brand-dark">
-      <h1 className="text-3xl font-bold text-brand-dark dark:text-brand-light mb-8 text-center">
+    <div className="max-w-7xl mx-auto px-4 py-10 dark:bg-night">
+      <h1 className="text-3xl font-bold text-brand-dark dark:text-night-text mb-8 text-center">
         Мероприятия
       </h1>
 
-      <p className="text-center text-brand-text dark:text-cream max-w-2xl mx-auto mb-10">
+      <p className="text-center text-brand-text dark:text-night-text max-w-2xl mx-auto mb-10">
         Мы любим собираться вместе — будь то книжные обсуждения, поход в оперу, лекции или уютные творческие вечера.
       </p>
 
-      <h2 className="text-xl font-semibold mb-4 text-brand-text dark:text-brand-light">
+      <h2 className="text-xl font-semibold mb-4 text-brand-text dark:text-night-text">
         Прошедшие мероприятия
       </h2>
 
@@ -83,7 +83,7 @@ function Events() {
         <select
           value={selectedTag}
           onChange={(e) => setSelectedTag(e.target.value)}
-          className="w-full sm:w-1/2 px-4 py-2 border rounded-md bg-white dark:bg-brand-dark text-brand-text dark:text-brand-light"
+          className="w-full sm:w-1/2 px-4 py-2 border rounded-md bg-white dark:bg-night text-brand-text dark:text-night-text"
         >
           <option value="Все">Все направления</option>
           <option value="Мастер-класс">Мастер-класс</option>
@@ -98,7 +98,7 @@ function Events() {
         <select
           value={accessFilter}
           onChange={(e) => setAccessFilter(e.target.value)}
-          className="w-full sm:w-1/2 px-4 py-2 border rounded-md bg-white dark:bg-brand-dark text-brand-text dark:text-brand-light"
+          className="w-full sm:w-1/2 px-4 py-2 border rounded-md bg-white dark:bg-night text-brand-text dark:text-night-text"
         >
           <option value="Все">Формат мероприятия</option>
           <option value="Открытое мероприятие">Открытые</option>
@@ -107,7 +107,7 @@ function Events() {
       </div>
 
       {loading ? (
-        <div className="py-20 text-center text-brand-text dark:text-brand-light">Загрузка мероприятий…</div>
+        <div className="py-20 text-center text-brand-text dark:text-night-text">Загрузка мероприятий…</div>
       ) : error ? (
         <div className="py-20 text-center text-red-600">Не удалось загрузить: {error}</div>
       ) : (

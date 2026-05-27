@@ -45,13 +45,13 @@ function Header() {
   return (
     <Disclosure
       as="nav"
-      className="bg-brand dark:bg-brand-dark text-brand-dark dark:text-brand-light shadow-md sticky top-0 z-50"
+      className="bg-brand dark:bg-night text-brand-dark dark:text-night-text shadow-md sticky top-0 z-50"
     >
       {({ open }) => (
         <>
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
             {/* Название */}
-            <Link to="/" className="text-2xl font-bold text-brand-dark dark:text-brand-light whitespace-nowrap">
+            <Link to="/" className="text-3xl md:text-4xl font-bold text-brand-dark dark:text-night-text whitespace-nowrap tracking-tight">
               Your Space
             </Link>
 
@@ -63,7 +63,7 @@ function Header() {
                   <Link
                     key={item.name}
                     to={item.to}
-                    className="text-sm hover:underline text-brand-dark dark:text-brand-light"
+                    className="text-sm hover:underline text-brand-dark dark:text-night-text"
                   >
                     {item.name}
                   </Link>
@@ -72,7 +72,7 @@ function Header() {
 
               {/* Mobile menu button */}
               <div className="md:hidden">
-                <Disclosure.Button className="text-brand-dark dark:text-brand-light">
+                <Disclosure.Button className="text-brand-dark dark:text-night-text">
                   {open ? <X size={24} /> : <Menu size={24} />}
                 </Disclosure.Button>
               </div>
@@ -80,7 +80,7 @@ function Header() {
               {/* Theme toggle */}
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="text-brand-dark dark:text-brand-light transition"
+                className="text-brand-dark dark:text-night-text transition"
                 aria-label="Toggle Dark Mode"
               >
                 {darkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -102,7 +102,7 @@ function Header() {
                 <Link
                   key={item.name}
                   to={item.to}
-                  className="block text-brand-dark dark:text-brand-light hover:underline"
+                  className="block text-brand-dark dark:text-night-text hover:underline"
                 >
                   {item.name}
                 </Link>

@@ -71,24 +71,24 @@ function FAQ() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-brand-dark dark:text-brand-light mb-8 text-center flex items-center justify-center gap-2">
+      <h1 className="text-3xl font-bold text-brand-dark dark:text-night-text mb-8 text-center flex items-center justify-center gap-2">
         <HelpCircle size={28} /> Часто задаваемые вопросы
       </h1>
 
-      <div className="space-y-4 text-gray-700 dark:text-gray-300">
+      <div className="space-y-4 text-gray-700 dark:text-night-text">
         {questions.map((q, i) => (
-          <div key={i} className="bg-white dark:bg-brand-text border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+          <div key={i} className="bg-white dark:bg-night-surface border border-gray-200 dark:border-gray-600 rounded-lg p-4">
             <button
               onClick={() => toggle(i)}
               className="flex justify-between items-center w-full text-left"
             >
-              <h2 className="text-lg font-semibold text-brand-dark dark:text-brand-light">
+              <h2 className="text-lg font-semibold text-brand-dark dark:text-night-text">
                 {q.title}
               </h2>
               {openIndex === i ? (
-                <ChevronUp size={20} className="text-brand-dark dark:text-brand-light" />
+                <ChevronUp size={20} className="text-brand-dark dark:text-night-text" />
               ) : (
-                <ChevronDown size={20} className="text-brand-dark dark:text-brand-light" />
+                <ChevronDown size={20} className="text-brand-dark dark:text-night-text" />
               )}
             </button>
             {openIndex === i && <div className="mt-3 text-sm">{q.answer}</div>}

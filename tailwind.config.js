@@ -14,8 +14,8 @@ export default {
         // 'brand-text': '#3b1e1e',
         // 'brand-circle': '#f4e8df',
 
-        'brand-dark': '#7A3E46',       // глубокий бордово-розовый (основной)
-        'brand-light': '#C98B97',            // очень светлый фон сайта
+        'brand-dark': '#7A3E46',       // глубокий бордово-розовый (основной, light mode)
+        'brand-light': '#C98B97',            // светлый бордовый
         'brand': '#FAF4F4',      // розовый из логотипа (фон карточек, иконок)
         'brand-text': '#5E2B33',       // насыщенный цвет текста
         'accent': '#DCA2AF',           // мягкий акцент (например, теги)
@@ -23,6 +23,14 @@ export default {
 
         'card': '#ebcbcb',           // цвет карточек
         'light-violet': '#c1a8ad', // цвет текста в карточках
+
+        // Dark mode — "Warm Midnight" palette
+        'night': '#1A1014',            // near-black с тёплым оттенком (основной фон)
+        'night-surface': '#241719',    // карточки, поднятые поверхности
+        'night-border': '#3D2429',     // тонкие разделители
+        'night-text': '#F0E3E5',       // основной текст (контраст 13:1)
+        'night-muted': '#B89BA1',      // вторичный текст, даты
+        'rose': '#DCA2AF',             // акцент: ссылки, бейджи, hover
 
       },
       keyframes: {
