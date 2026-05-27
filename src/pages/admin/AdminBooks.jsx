@@ -21,20 +21,28 @@ const DEFAULT_GENRES = [
 ]
 
 function MonthYearPicker({ value, onChange }) {
-  const [yearStr, monthStr] = (value || "-").split("-")
-  const year = yearStr || ""
-  const month = monthStr || ""
+  // Local state holds the user's partial selection (e.g. month picked but
+  // year still empty) without bouncing it back through `value` mid-edit.
+  const [year, setYear] = useState("")
+  const [month, setMonth] = useState("")
 
-  // Year range: 5 years back through 2 years ahead of current year.
+  useEffect(() => {
+    const [y = "", m = ""] = (value || "").split("-")
+    setYear(y)
+    setMonth(m)
+  }, [value])
+
   const thisYear = new Date().getFullYear()
   const years = []
   for (let y = thisYear - 5; y <= thisYear + 2; y++) years.push(y)
 
   function update(newYear, newMonth) {
-    if (!newYear || !newMonth) {
-      onChange("")
-    } else {
+    setYear(newYear)
+    setMonth(newMonth)
+    if (newYear && newMonth) {
       onChange(`${newYear}-${String(newMonth).padStart(2, "0")}`)
+    } else {
+      onChange("")
     }
   }
 
