@@ -23,7 +23,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-brand text-brand-text dark:bg-night dark:text-night-text">
+        <div className="min-h-screen overflow-x-hidden bg-brand text-brand-text dark:bg-night dark:text-night-text">
           <Header />
           <main className="px-6 py-8">
             <Routes>

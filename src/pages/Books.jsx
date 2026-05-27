@@ -295,7 +295,7 @@ function Books() {
           style={{ scrollbarWidth: "thin" }}
         >
           {filteredBooks.map((book) => (
-            <div key={book.id} className="flex-shrink-0 w-72 snap-start">
+            <div key={book.id} className="flex-shrink-0 w-64 sm:w-72 snap-start">
               <BookCard
                 book={book}
                 expanded={expandedId === book.id}

@@ -66,7 +66,7 @@ function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border border-brand-dark dark:border-white text-brand-dark dark:text-night-text px-5 py-2 rounded-lg transition hover:bg-brand-dark hover:text-white dark:hover:bg-rose dark:hover:bg-night-surface"
             >
-              Хочешь к нам в сообщество? Заполни анкету!
+              Присоединиться
             </a>
           </div>
         </div>
@@ -75,7 +75,7 @@ function Home() {
           <img
             src="yourspace.jpg"
             alt="Книги и сообщество"
-            className="w-80 aspect-square mx-auto md:mx-0 rounded-full shadow object-cover dark:invert dark:hue-rotate-180"
+            className="w-64 sm:w-80 max-w-full aspect-square mx-auto md:mx-0 rounded-full shadow object-cover dark:invert dark:hue-rotate-180"
           />
         </div>
       </section>
