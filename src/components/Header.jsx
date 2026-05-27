@@ -99,13 +99,14 @@ function Header() {
           >
             <Disclosure.Panel className="md:hidden px-4 pb-4 space-y-2 origin-top">
               {navigation.map((item) => (
-                <Link
+                <Disclosure.Button
                   key={item.name}
+                  as={Link}
                   to={item.to}
                   className="block text-brand-dark dark:text-night-text hover:underline"
                 >
                   {item.name}
-                </Link>
+                </Disclosure.Button>
               ))}
             </Disclosure.Panel>
           </Transition>

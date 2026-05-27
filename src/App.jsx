@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import BackToTop from "./components/BackToTop"
 import { AuthProvider } from "./lib/AuthContext"
 import ProtectedRoute from "./components/admin/ProtectedRoute"
 
@@ -53,6 +54,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <BackToTop />
         </div>
       </Router>
     </AuthProvider>
