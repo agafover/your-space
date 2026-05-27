@@ -59,35 +59,48 @@ function InstagramEmbed({ postId }) {
 
   const permalink = `https://www.instagram.com/p/${clean}/`
 
+  // Crop the bottom social UI (likes / caption / "Add a comment") with
+  // overflow:hidden on a wrapper. We keep just the header + photo carousel.
   return (
-    <blockquote
-      className="instagram-media"
-      data-instgrm-captioned
-      data-instgrm-permalink={permalink}
-      data-instgrm-version="14"
+    <div
       style={{
-        background: "#FFF",
-        border: 0,
+        maxWidth: "450px",
+        maxHeight: "560px",
+        overflow: "hidden",
         margin: "0 auto",
-        maxWidth: "540px",
-        minWidth: "326px",
-        padding: 0,
+        borderRadius: "8px",
+        position: "relative",
         width: "100%",
       }}
     >
-      <div style={{ padding: "32px 16px", textAlign: "center", color: "#666", fontSize: "14px" }}>
-        Загрузка поста…
-        {" "}
-        <a
-          href={permalink}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "#c13584", textDecoration: "underline" }}
-        >
-          открыть в Instagram
-        </a>
-      </div>
-    </blockquote>
+      <blockquote
+        className="instagram-media"
+        data-instgrm-permalink={permalink}
+        data-instgrm-version="14"
+        style={{
+          background: "#FFF",
+          border: 0,
+          margin: 0,
+          maxWidth: "100%",
+          minWidth: "326px",
+          padding: 0,
+          width: "100%",
+        }}
+      >
+        <div style={{ padding: "32px 16px", textAlign: "center", color: "#666", fontSize: "14px" }}>
+          Загрузка поста…
+          {" "}
+          <a
+            href={permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#c13584", textDecoration: "underline" }}
+          >
+            открыть в Instagram
+          </a>
+        </div>
+      </blockquote>
+    </div>
   )
 }
 
