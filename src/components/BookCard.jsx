@@ -1,4 +1,5 @@
 import { Star, Instagram } from "lucide-react"
+import { sanitizeInstagramPostId } from "./InstagramEmbed"
 
 function BookCard({ book, expanded, onToggle }) {
   return (
@@ -75,7 +76,7 @@ function BookCard({ book, expanded, onToggle }) {
 
           {book.instagram && (
             <a
-              href={`https://www.instagram.com/p/${book.instagram}`}
+              href={`https://www.instagram.com/p/${sanitizeInstagramPostId(book.instagram)}/`}
               target="_blank"
               rel="noopener noreferrer"
               className="block text-sm text-brand-dark dark:text-night-text hover:underline"

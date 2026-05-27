@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
-import { Calendar as CalendarIcon, Check } from "lucide-react"
+import { Calendar as CalendarIcon } from "lucide-react"
 import { supabase } from "../lib/supabase"
+
+// Until a real RSVP system is built, the "I want to join" button points to the
+// community signup form shown in the footer/home.
+const SIGNUP_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLScu1AP1n_iihe5KNLnAvnqLKSYN6-T72syL-cTzJ2f9lF0FyQ/viewform"
 
 const RU_MONTHS = [
   "января", "февраля", "марта", "апреля", "мая", "июня",
@@ -16,7 +21,6 @@ function formatEventDate(isoDate) {
 function Calendar() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
-  const [participation, setParticipation] = useState({})
 
   useEffect(() => {
     let cancelled = false
@@ -33,10 +37,6 @@ function Calendar() {
     load()
     return () => { cancelled = true }
   }, [])
-
-  const toggleParticipation = (id) => {
-    setParticipation((prev) => ({ ...prev, [id]: !prev[id] }))
-  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
@@ -69,23 +69,14 @@ function Calendar() {
                   <h3 className="text-lg font-semibold text-brand-text dark:text-night-text mb-2">{event.title}</h3>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => toggleParticipation(event.id)}
-                  className={`mt-6 px-4 py-2 rounded-xl text-sm transition flex items-center justify-center gap-2
-                    ${participation[event.id]
-                      ? "bg-green-500 text-white hover:bg-green-600"
-                      : "border border-brand-dark dark:border-night-border text-brand-dark dark:text-night-text hover:bg-brand-dark hover:text-white dark:hover:bg-rose dark:hover:text-night"
-                    }`}
+                <a
+                  href={SIGNUP_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 px-4 py-2 rounded-xl text-sm transition flex items-center justify-center gap-2 border border-brand-dark dark:border-night-border text-brand-dark dark:text-night-text hover:bg-brand-dark hover:text-white dark:hover:bg-rose dark:hover:text-night"
                 >
-                  {participation[event.id] ? (
-                    <>
-                      <Check size={16} /> Участвую!
-                    </>
-                  ) : (
-                    "Хочу участвовать"
-                  )}
-                </button>
+                  Хочу участвовать
+                </a>
               </div>
             </li>
           ))}

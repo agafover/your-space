@@ -1,5 +1,15 @@
 import { useEffect } from "react"
 
+// Accept either the bare post shortcode or a pasted URL like
+// "https://www.instagram.com/p/SHORTCODE/" or "/reel/SHORTCODE/".
+export function sanitizeInstagramPostId(input) {
+  if (!input) return ""
+  const trimmed = String(input).trim()
+  const fromUrl = trimmed.match(/instagram\.com\/(?:p|reel|reels)\/([^/?#\s]+)/i)
+  if (fromUrl) return fromUrl[1]
+  return trimmed.replace(/^\/+|\/+$/g, "")
+}
+
 // Module-level state: load the Instagram embed script exactly once per page.
 let scriptStatus = "idle" // "idle" | "loading" | "ready"
 const pendingProcess = []
@@ -36,20 +46,24 @@ function processWhenReady(cb) {
 }
 
 function InstagramEmbed({ postId }) {
+  const clean = sanitizeInstagramPostId(postId)
+
   useEffect(() => {
     ensureScript()
     processWhenReady(() => {
       if (window.instgrm) window.instgrm.Embeds.process()
     })
-  }, [postId])
+  }, [clean])
 
-  if (!postId) return null
+  if (!clean) return null
+
+  const permalink = `https://www.instagram.com/p/${clean}/`
 
   return (
     <blockquote
       className="instagram-media"
       data-instgrm-captioned
-      data-instgrm-permalink={`https://www.instagram.com/p/${postId}/`}
+      data-instgrm-permalink={permalink}
       data-instgrm-version="14"
       style={{
         background: "#FFF",
@@ -65,7 +79,7 @@ function InstagramEmbed({ postId }) {
         Загрузка поста…
         {" "}
         <a
-          href={`https://www.instagram.com/p/${postId}/`}
+          href={permalink}
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: "#c13584", textDecoration: "underline" }}
