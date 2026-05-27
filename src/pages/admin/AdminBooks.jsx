@@ -12,6 +12,14 @@ const MONTH_LABELS = [
   "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь",
 ]
 
+// Default suggestions shown even before any books have genres set in the DB.
+// At runtime these are merged with whatever distinct genres exist in `books`.
+const DEFAULT_GENRES = [
+  "классика", "современная проза", "фантастика", "фэнтези",
+  "детектив", "антиутопия", "мистика", "нон-фикшн",
+  "психология", "биография", "исторический роман", "военная проза",
+]
+
 function MonthYearPicker({ value, onChange }) {
   const [yearStr, monthStr] = (value || "-").split("-")
   const year = yearStr || ""
@@ -91,6 +99,11 @@ function BookForm({ initial, onSave, onCancel, saving, otherBooks = [] }) {
     return otherBooks.find((b) => normalizeTitle(b.title) === norm) ?? null
   }, [form.title, otherBooks])
 
+  const genreSuggestions = useMemo(() => {
+    const fromDb = otherBooks.map((b) => b.genre).filter(Boolean)
+    return Array.from(new Set([...DEFAULT_GENRES, ...fromDb])).sort((a, b) => a.localeCompare(b))
+  }, [otherBooks])
+
   function handleSubmit(e) {
     e.preventDefault()
     const payload = {
@@ -133,21 +146,18 @@ function BookForm({ initial, onSave, onCancel, saving, otherBooks = [] }) {
         <Field label="Рейтинг (0–5)" hint="оставь пустым, если ещё нет">
           <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={(e) => set("rating", e.target.value)} className={inputCls} />
         </Field>
-        <Field label="Жанр" hint="например: классика, фантастика, фэнтези">
-          <input type="text" value={form.genre} onChange={(e) => set("genre", e.target.value)} className={inputCls} list="known-genres" />
+        <Field label="Жанр" hint="выбери из списка или впиши свой — новый жанр запомнится">
+          <input
+            type="text"
+            value={form.genre}
+            onChange={(e) => set("genre", e.target.value)}
+            className={inputCls}
+            list="known-genres"
+          />
           <datalist id="known-genres">
-            <option value="классика" />
-            <option value="современная проза" />
-            <option value="фантастика" />
-            <option value="фэнтези" />
-            <option value="детектив" />
-            <option value="антиутопия" />
-            <option value="мистика" />
-            <option value="нон-фикшн" />
-            <option value="психология" />
-            <option value="биография" />
-            <option value="исторический роман" />
-            <option value="военная проза" />
+            {genreSuggestions.map((g) => (
+              <option key={g} value={g} />
+            ))}
           </datalist>
         </Field>
         <Field label="Обложка" hint="можно вставить URL или загрузить файл">

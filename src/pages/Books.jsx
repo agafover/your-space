@@ -112,7 +112,7 @@ function Books() {
 
   const allBooks = currentBook ? [currentBook, ...otherBooks] : otherBooks
   const topThree = selectTopThree(allBooks)
-  const availableGenres = Array.from(new Set(otherBooks.map(b => b.genre).filter(Boolean))).sort()
+  const availableGenres = Array.from(new Set(allBooks.map(b => b.genre).filter(Boolean))).sort()
 
   const filteredBooks = otherBooks
     .filter(book => {
@@ -168,6 +168,11 @@ function Books() {
               {currentBook.title}
             </h2>
             <p className="text-md text-gray-600 dark:text-night-text mb-2">{currentBook.author}</p>
+            {currentBook.genre && (
+              <span className="inline-block text-xs px-2 py-0.5 mb-3 rounded-full bg-brand-light/30 dark:bg-night-border text-brand-text dark:text-night-text">
+                {currentBook.genre}
+              </span>
+            )}
             <p className="text-gray-800 dark:text-night-text whitespace-pre-line mb-4">{currentBook.description}</p>
             <a
               href="#"
