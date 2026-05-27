@@ -61,14 +61,16 @@ function InstagramEmbed({ postId }) {
         width: "100%",
       }}
     >
-      <div style={{ padding: "16px" }}>
+      <div style={{ padding: "32px 16px", textAlign: "center", color: "#666", fontSize: "14px" }}>
+        Загрузка поста…
+        {" "}
         <a
           href={`https://www.instagram.com/p/${postId}/`}
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: "#c13584", textDecoration: "underline" }}
         >
-          Открыть пост в Instagram
+          открыть в Instagram
         </a>
       </div>
     </blockquote>

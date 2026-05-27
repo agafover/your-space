@@ -114,17 +114,6 @@ function EventCard({ event, expanded, onToggle }) {
               {event.description}
             </p>
 
-            {expanded && event.instagram && (
-              <a
-                href={`https://www.instagram.com/p/${event.instagram}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-rose-600 hover:underline block mb-2"
-              >
-                Показать Instagram-пост
-              </a>
-            )}
-
             <button
               onClick={onToggle}
               className="text-sm text-brand-dark dark:text-night-text hover:underline mt-4"
@@ -144,10 +133,7 @@ function EventCard({ event, expanded, onToggle }) {
           </div>
 
           {expanded && event.instagram && (
-            <div className="px-4 pb-6 pt-2 border-t border-brand-dark/10 dark:border-night-border">
-              <p className="text-xs uppercase tracking-wide text-brand-text/60 dark:text-night-muted mb-3 text-center">
-                Фото с Instagram
-              </p>
+            <div className="px-4 pb-6 pt-4 border-t border-brand-dark/10 dark:border-night-border">
               <InstagramEmbed postId={event.instagram} />
             </div>
           )}
