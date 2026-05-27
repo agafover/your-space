@@ -114,6 +114,12 @@ function EventCard({ event, expanded, onToggle }) {
               {event.description}
             </p>
 
+            {expanded && event.instagram && (
+              <div className="mt-4 flex justify-center">
+                <InstagramEmbed postId={event.instagram} />
+              </div>
+            )}
+
             <button
               onClick={onToggle}
               className="text-sm text-brand-dark dark:text-night-text hover:underline mt-4"
@@ -131,12 +137,6 @@ function EventCard({ event, expanded, onToggle }) {
             )}
           </div>
           </div>
-
-          {expanded && event.instagram && (
-            <div className="px-4 pb-6 pt-4 border-t border-brand-dark/10 dark:border-night-border">
-              <InstagramEmbed postId={event.instagram} />
-            </div>
-          )}
         </div>
       )
 }
