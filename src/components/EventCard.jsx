@@ -48,8 +48,7 @@ function EventCard({ event, expanded, onToggle }) {
               src={expanded ? currentImage : (images[0] || "/placeholder.jpg")}
               alt={event.title}
               onClick={expanded ? () => setLightboxIndex(carouselIndex) : undefined}
-              className={`w-full object-cover ${expanded ? "h-full max-h-[700px] rounded-l-xl cursor-zoom-in" : "h-64 rounded-t-xl"}`}
-              style={{ aspectRatio: expanded ? "4 / 3" : undefined }}
+              className={`w-full object-cover ${expanded ? "h-64 lg:h-full lg:absolute lg:inset-0 lg:rounded-l-xl cursor-zoom-in" : "h-64 rounded-t-xl"}`}
             />
 
             {expanded && hasMultiple && (
