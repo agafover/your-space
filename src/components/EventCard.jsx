@@ -1,64 +1,16 @@
 import {
     CalendarDays,
-    Instagram,
-    Lock,
-    Unlock,
     ChevronLeft,
     ChevronRight,
+    Expand,
 } from "lucide-react"
-import { useState, useRef } from "react"
+import { useState } from "react"
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
 
-function ImageGallery({ images, onClickImage }) {
-    const scrollRef = useRef(null)
-
-    const scroll = (direction) => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({
-                left: direction === "left" ? -300 : 300,
-                behavior: "smooth",
-            })
-        }
-    }
-
-    return (
-        <div className="relative mt-3">
-            <div ref={scrollRef} className="flex gap-2 overflow-x-auto no-scrollbar">
-                {images.slice(1).map((img, i) => (
-                    <img
-                        key={i}
-                        src={img}
-                        alt="mini"
-                        onClick={() => onClickImage(i + 1)}
-                        className="h-24 w-24 object-cover rounded-md flex-shrink-0 cursor-pointer hover:opacity-90"
-                    />
-                ))}
-            </div>
-
-            {images.length > 10 && (
-                <>
-                    <button
-                        onClick={() => scroll("left")}
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100"
-                    >
-                        <ChevronLeft size={20} />
-                    </button>
-
-                    <button
-                        onClick={() => scroll("right")}
-                        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100"
-                    >
-                        <ChevronRight size={20} />
-                    </button>
-                </>
-            )}
-        </div>
-    )
-}
-
 function EventCard({ event, expanded, onToggle }) {
     const [lightboxIndex, setLightboxIndex] = useState(-1)
+    const [carouselIndex, setCarouselIndex] = useState(0)
 
     const tagColors = {
         "Мастер-класс": "bg-green-100 text-green-800",
@@ -72,26 +24,71 @@ function EventCard({ event, expanded, onToggle }) {
         "Закрытое мероприятие": "bg-red-100 text-red-800",
     }
 
+    const images = event.images ?? []
+    const hasMultiple = images.length > 1
+    const currentImage = images[carouselIndex] || images[0] || "/placeholder.jpg"
+
+    function showPrev(e) {
+        e?.stopPropagation()
+        setCarouselIndex((i) => (i - 1 + images.length) % images.length)
+    }
+    function showNext(e) {
+        e?.stopPropagation()
+        setCarouselIndex((i) => (i + 1) % images.length)
+    }
+
     return (
         <div
-          className={`bg-white dark:bg-night-surface rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${expanded ? "lg:flex gap-6 col-span-2" : ""}`}
+          className={`bg-white dark:bg-night-surface rounded-xl shadow hover:shadow-xl transform hover:-translate-y-1 transition duration-300 overflow-hidden ${expanded ? "lg:flex gap-6 col-span-full" : ""}`}
         >
-          <div className={`w-full ${expanded ? "lg:w-1/2" : ""} flex-shrink-0`}>
+          <div className={`relative group ${expanded ? "lg:w-1/2 flex-shrink-0" : "w-full"}`}>
             <img
-              src={event.images?.[0] || "/placeholder.jpg"}
+              src={expanded ? currentImage : (images[0] || "/placeholder.jpg")}
               alt={event.title}
-              className={`w-full object-cover ${expanded ? "h-full max-h-[700px] rounded-l-xl" : "h-64 rounded-t-xl"}`}
+              onClick={expanded ? () => setLightboxIndex(carouselIndex) : undefined}
+              className={`w-full object-cover ${expanded ? "h-full max-h-[700px] rounded-l-xl cursor-zoom-in" : "h-64 rounded-t-xl"}`}
               style={{ aspectRatio: expanded ? "4 / 3" : undefined }}
             />
+
+            {expanded && hasMultiple && (
+              <>
+                <button
+                  type="button"
+                  onClick={showPrev}
+                  aria-label="Предыдущее фото"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-night/80 hover:bg-white dark:hover:bg-night shadow text-brand-dark dark:text-night-text"
+                >
+                  <ChevronLeft size={22} />
+                </button>
+                <button
+                  type="button"
+                  onClick={showNext}
+                  aria-label="Следующее фото"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-night/80 hover:bg-white dark:hover:bg-night shadow text-brand-dark dark:text-night-text"
+                >
+                  <ChevronRight size={22} />
+                </button>
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 text-white text-xs font-medium pointer-events-none">
+                  {carouselIndex + 1} / {images.length}
+                </div>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setLightboxIndex(carouselIndex) }}
+                  aria-label="Открыть на весь экран"
+                  className="absolute bottom-3 right-3 w-9 h-9 flex items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 transition"
+                >
+                  <Expand size={16} />
+                </button>
+              </>
+            )}
           </div>
-      
-          <div className="p-4 flex-1">
+
+          <div className="p-4 flex-1 min-w-0">
             <p className="text-sm text-brand-dark dark:text-night-text mb-1 flex items-center gap-1">
               <CalendarDays size={16} className="stroke-brand-dark dark:stroke-rose" />
               {event.date}
             </p>
-      
-            {/* Теги */}
+
             {event.tags && (
               <div className="flex flex-wrap gap-2 mb-2">
                 {event.tags.map((tag, i) => (
@@ -104,56 +101,46 @@ function EventCard({ event, expanded, onToggle }) {
                 ))}
               </div>
             )}
-      
-            <h3 className="text-lg font-bold text-brand-text dark:text-night-text mb-2">
+
+            <h3 className="text-lg font-bold text-brand-text dark:text-night-text mb-2 break-words">
               {event.title}
             </h3>
-      
+
             <p
-              className={`text-sm text-gray-600 dark:text-night-text whitespace-pre-line ${expanded ? "mb-3" : "line-clamp-4 mb-2"}`}
+              className={`text-sm text-gray-600 dark:text-night-text whitespace-pre-line break-words ${expanded ? "mb-3" : "line-clamp-4 mb-2"}`}
             >
               {event.description}
             </p>
-      
-            {expanded && (
-              <>
-                {event.instagram && (
-                  <a
-                    href={`https://www.instagram.com/p/${event.instagram}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-rose-600 hover:underline block mb-2"
-                  >
-                    Показать Instagram-пост
-                  </a>
-                )}
-      
-                {event.images?.length > 1 && (
-                  <ImageGallery
-                    images={event.images}
-                    onClickImage={(i) => setLightboxIndex(i)}
-                  />
-                )}
-      
-                <Lightbox
-                  open={lightboxIndex >= 0}
-                  close={() => setLightboxIndex(-1)}
-                  index={lightboxIndex}
-                  slides={event.images.map((img) => ({ src: img }))}
-                />
-              </>
+
+            {expanded && event.instagram && (
+              <a
+                href={`https://www.instagram.com/p/${event.instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-rose-600 hover:underline block mb-2"
+              >
+                Показать Instagram-пост
+              </a>
             )}
-      
+
             <button
               onClick={onToggle}
               className="text-sm text-brand-dark dark:text-night-text hover:underline mt-4"
             >
               {expanded ? "Скрыть" : "Подробнее"}
             </button>
+
+            {expanded && (
+              <Lightbox
+                open={lightboxIndex >= 0}
+                close={() => setLightboxIndex(-1)}
+                index={lightboxIndex}
+                slides={images.map((img) => ({ src: img }))}
+              />
+            )}
           </div>
         </div>
       )
-      
 }
 
 export default EventCard
