@@ -65,7 +65,7 @@ function InstagramEmbed({ postId }) {
     <div
       style={{
         maxWidth: "450px",
-        maxHeight: "560px",
+        maxHeight: "700px",
         overflow: "hidden",
         margin: "0 auto",
         borderRadius: "8px",
